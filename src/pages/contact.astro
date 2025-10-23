@@ -1,10 +1,13 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import PageLayout from '../layouts/PageLayout.astro';
+import Container from '../components/Container.astro';
+import DefaultLayout from '../layouts/DefaultLayout.astro';
+import Page from '../layouts/Page.astro';
 ---
 
-<BaseLayout title="Contact" description="Get In Touch">
-  <PageLayout title="Contact" description="Get In Touch">
-    Contact
-  </PageLayout>
-</BaseLayout>
+<Page title="Contact" description="Contact">
+  <DefaultLayout title="Contact" description="Contact">
+    <Container>
+      Contact
+    </Container>
+  </DefaultLayout>
+</Page>

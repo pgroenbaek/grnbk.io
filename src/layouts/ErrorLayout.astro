@@ -1,11 +1,31 @@
 ---
+import { Image } from "astro:assets";
+
 const { children } = Astro.props;
+const { pathname } = new URL(Astro.request.url);
 ---
 
 <section class="container mx-auto my-8">
-  <header>
-  </header>
   <main>
-    Error
+    <div class="flex flex-col items-center justify-center mt-12 text-center">
+      <div class="flex items-center justify-center space-x-2 mb-8">
+        <a class="w-32 dark:hidden" href="/">
+          <!--Image src={logoImage} alt="Logo" /-->
+        </a>
+        <a class="hidden w-32 dark:block" href="/">
+          <!--Image src={darkLogo} alt="Logo" /-->
+        </a>
+      </div>
+
+      <h1 class="text-2xl font-bold mb-2">
+        404: Not Found
+      </h1>
+
+      <pre class="text-lg text-gray-500 mb-8">Path: {pathname}</pre>
+
+      <div>
+        <a href="/"><i class="fa-solid fa-arrow-left"></i> Home</a>
+      </div>
+    </div>
   </main>
 </section>

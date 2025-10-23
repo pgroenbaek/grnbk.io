@@ -1,0 +1,10 @@
+---
+import Footer from '../components/Footer.astro';
+import Navbar from '../components/Navbar.astro';
+
+const { title, description, children } = Astro.props;
+---
+
+<Navbar/>
+<slot/>
+<Footer/>

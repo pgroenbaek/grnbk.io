@@ -1,19 +1,22 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import PageLayout from '../layouts/PageLayout.astro';
+import Container from '../components/Container.astro';
+import DefaultLayout from '../layouts/DefaultLayout.astro';
+import Page from '../layouts/Page.astro';
 import { getCollection } from 'astro:content';
 
 const posts = await getCollection('blog', ({ data }) => !data.draft);
 ---
 
-<BaseLayout title="Blog" description="All posts">
-  <PageLayout title="Blog" description="Latest posts from my collection">
-    <ul>
+<Page title="About" description="About me">
+  <DefaultLayout title="About" description="About me">
+    <Container>
+      <ul>
       {posts.map(post => (
         <li>
-          <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+        <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
         </li>
       ))}
-    </ul>
-  </PageLayout>
-</BaseLayout>
+      </ul>
+    </Container>
+  </DefaultLayout>
+</Page>
