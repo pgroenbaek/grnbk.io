@@ -1,5 +1,42 @@
 ---
+import Container from '../components/Container.astro';
+//import Themeswitch from "./themeswitch.astro";
 
+const socials = [
+  { href: 'https://github.com/pgroenbaek', name: 'GitHub', iconClass: 'fab fa-github' },
+  { href: 'https://x.com/pgroenbaek', name: 'X', iconClass: 'fab fa-x-twitter' },
+  { href: 'https://linkedin.com/in/yourprofile', name: 'LinkedIn', iconClass: 'fab fa-linkedin-in' },
+  { href: 'https://instagram.com/pgroenbaek', name: 'Instagram', iconClass: 'fab fa-instagram' },
+  { href: 'https://keybase.io/pgroenbaek', name: 'Keybase', iconClass: 'fab fa-keybase' },
+];
 ---
 
-<p>Footer</p>
+<Container class="mt-10 border-t border-gray-100 dark:border-gray-800">
+  <footer class="flex flex-col items-center gap-4 py-6">
+    
+    <!-- Social Icons -->
+    <div class="flex gap-4">
+      {socials.map((social) => (
+        <a
+          href={social.href}
+          aria-label={social.name}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-gray-500 dark:text-gray-500 hover:text-gray-400 dark:hover:text-gray-300 transition-colors text-[1.1em]"
+        >
+          <i class={`fa ${social.iconClass}`} aria-hidden="true"></i>
+        </a>
+      ))}
+    </div>
+
+    <!-- Copyright -->
+    <div class="text-sm text-center text-gray-600 dark:text-gray-400">
+      Copyright © {new Date().getFullYear()} GRNBK.io. All rights reserved.
+    </div>
+
+    <!-- Theme Switch -->
+    <div>
+      <!--Themeswitch /-->
+    </div>
+  </footer>
+</Container>

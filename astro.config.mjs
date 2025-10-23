@@ -8,12 +8,12 @@ import tailwind from '@astrojs/tailwind';
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://grnbk.io',
-    integrations: [
-        icon(),
-        mdx(),
-        tailwind(),
-        sitemap(),
-        react()
-    ]
+  site: 'https://grnbk.io',
+  integrations: [
+    icon(),
+    mdx(),
+    tailwind(),
+    sitemap(),
+    react()
+  ]
 });
