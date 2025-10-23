@@ -5,7 +5,7 @@ const posts = await getCollection('blog');
 
 export const GET = ({ site }: { site?: string }) => {
   return rss({
-    title: 'My Blog',
+    title: 'GRNBK.io',
     description: 'Latest posts from my blog',
     site: site || "",
     items: posts.map((post) => ({

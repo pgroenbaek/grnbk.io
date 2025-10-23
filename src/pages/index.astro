@@ -1,11 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageLayout from '../layouts/PageLayout.astro';
 ---
 
-<BaseLayout
-  title="Index"
-  description="A description"
-  ogImage="/og/about.png"
->
-  <h1>About</h1>
+<BaseLayout title="Index" description="Main page">
+  <PageLayout title="Index" description="Main Page">
+    Index
+  </PageLayout>
 </BaseLayout>
