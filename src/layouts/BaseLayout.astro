@@ -1,0 +1,26 @@
+---
+import '../styles/global.css';
+import { SEO } from 'astro-seo';
+
+const { title, description, ogImage } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <SEO
+      title={title}
+      description={description}
+      openGraph={{
+        basic: {
+          title: title || 'Default Title',
+          type: 'website',
+          image: ogImage || '/default-og.png',
+        },
+      }}
+      twitter={{ creator: '@yourhandle' }}
+    />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
