@@ -1,0 +1,98 @@
+---
+import Container from '../components/Container.astro';
+//import logoImage from "@/assets/logo.svg";
+//import darkLogo from "@/assets/logo-dark.svg";
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+
+interface Menu {
+  label: string;
+  href: string;
+  external?: boolean;
+  badge?: string;
+}
+
+const menu: Menu[] = [
+  { label: "Home", href: "/" },
+  { label: "Blog", href: "/blog" },
+  { label: "About", href: "/about" },
+  { label: "Get In Touch", href: "/contact" },
+];
+---
+
+<Container>
+  <header class="py-4">
+    <div class="flex items-center justify-between gap-4">
+      <!-- Logo -->
+      <a href="/" class="w-32 flex-shrink-0">
+        <a class="w-32 dark:hidden" href="/">
+          <!--Image src={logoImage} alt="Logo" /-->
+        </a>
+        <a class="hidden w-32 dark:block" href="/">
+          <!--Image src={darkLogo} alt="Logo" /-->
+        </a>
+      </a>
+
+      <!-- Menu -->
+      <div class="flex items-center space-x-4">
+        <nav class="hidden md:flex space-x-6">
+          {menu.map((item) => (
+            <a
+              href={item.href}
+              class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-400 dark:hover:text-gray-300"
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+
+        <!-- Mobile Menu Toggle -->
+        <button
+          id="menu-toggle"
+          aria-label="Toggle menu"
+          class="md:hidden text-gray-500 dark:text-gray-300 focus:outline-none"
+        >
+          <Icon name="heroicons:bars-3" class="w-6 h-6" id="menu-open-icon" />
+          <Icon name="heroicons:x-mark" class="w-6 h-6 hidden" id="menu-close-icon" />
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mt-4 hidden md:hidden">
+      <div class="flex flex-col items-center space-y-2">
+        {menu.map((item) => (
+          <a
+            href={item.href}
+            class="px-5 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-400 dark:hover:text-gray-300"
+          >
+            {item.label}
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <script is:inline>
+      const menuButton = document.getElementById("menu-toggle");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const openIcon = document.getElementById("menu-open-icon");
+      const closeIcon = document.getElementById("menu-close-icon");
+
+      menuButton.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+        openIcon.classList.toggle("hidden");
+        closeIcon.classList.toggle("hidden");
+      });
+    </script>
+
+  </header>
+</Container>
+
+<!--script is:inline>
+  const menuButton = document.getElementById("menu");
+  menuButton.addEventListener("click", () => {
+    [...document.querySelectorAll(".navmenu-toggle")].forEach((Element) => {
+      Element.classList.toggle("hidden");
+    });
+  });
+</script-->
