@@ -1,42 +1,55 @@
 ---
-import Container from '../components/Container.astro';
-//import logoImage from "@/assets/logo.svg";
-//import darkLogo from "@/assets/logo-dark.svg";
+import Container from '@/components/Container.astro';
+import LogoBlack from "@/assets/logo-black.svg";
+import LogoWhite from "@/assets/logo-white.svg";
 import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 
-interface Menu {
+interface MenuItem {
   label: string;
   href: string;
   external?: boolean;
   badge?: string;
 }
 
-const menu: Menu[] = [
+const leftMenu: MenuItem[] = [
   { label: "Home", href: "/" },
   { label: "Blog", href: "/blog" },
+];
+
+const rightMenu: MenuItem[] = [
   { label: "About", href: "/about" },
   { label: "Get In Touch", href: "/contact" },
 ];
 ---
 
 <Container>
-  <header class="py-4">
-    <div class="flex items-center justify-between gap-4">
-      <!-- Logo -->
-      <a href="/" class="w-32 flex-shrink-0">
-        <a class="w-32 dark:hidden" href="/">
-          <!--Image src={logoImage} alt="Logo" /-->
-        </a>
-        <a class="hidden w-32 dark:block" href="/">
-          <!--Image src={darkLogo} alt="Logo" /-->
-        </a>
+  <header class="py-4 relative">
+    <div class="flex items-center justify-between">
+      
+      <!-- Left Menu (Desktop) -->
+      <nav class="hidden md:flex space-x-6">
+        {leftMenu.map((item) => (
+          <a
+            href={item.href}
+            class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-400 dark:hover:text-gray-300"
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
+
+      <!-- Logo Centered -->
+      <a href="/" class="absolute left-1/2 transform -translate-x-1/2 w-32 flex-shrink-0">
+        <Image src={LogoBlack} alt="Logo" class="dark:hidden" />
+        <Image src={LogoWhite} alt="Logo" class="hidden dark:block" />
       </a>
 
-      <!-- Menu -->
-      <div class="flex items-center space-x-4">
+      <!-- Right Menu + Mobile Toggle -->
+      <div class="flex items-center space-x-4 ml-auto">
+        <!-- Desktop Right Menu -->
         <nav class="hidden md:flex space-x-6">
-          {menu.map((item) => (
+          {rightMenu.map((item) => (
             <a
               href={item.href}
               class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-400 dark:hover:text-gray-300"
@@ -46,7 +59,7 @@ const menu: Menu[] = [
           ))}
         </nav>
 
-        <!-- Mobile Menu Toggle -->
+        <!-- Mobile Toggle -->
         <button
           id="menu-toggle"
           aria-label="Toggle menu"
@@ -61,7 +74,7 @@ const menu: Menu[] = [
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="mt-4 hidden md:hidden">
       <div class="flex flex-col items-center space-y-2">
-        {menu.map((item) => (
+        {[...leftMenu, ...rightMenu].map((item) => (
           <a
             href={item.href}
             class="px-5 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-400 dark:hover:text-gray-300"
@@ -84,15 +97,5 @@ const menu: Menu[] = [
         closeIcon.classList.toggle("hidden");
       });
     </script>
-
   </header>
 </Container>
-
-<!--script is:inline>
-  const menuButton = document.getElementById("menu");
-  menuButton.addEventListener("click", () => {
-    [...document.querySelectorAll(".navmenu-toggle")].forEach((Element) => {
-      Element.classList.toggle("hidden");
-    });
-  });
-</script-->

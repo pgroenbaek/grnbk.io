@@ -1,5 +1,7 @@
 ---
 import { Image } from "astro:assets";
+import LogoBlack from "@/assets/logo-black.svg";
+import LogoWhite from "@/assets/logo-white.svg";
 
 const { children } = Astro.props;
 const { pathname } = new URL(Astro.request.url);
@@ -10,10 +12,10 @@ const { pathname } = new URL(Astro.request.url);
     <div class="flex flex-col items-center justify-center mt-12 text-center">
       <div class="flex items-center justify-center space-x-2 mb-8">
         <a class="w-32 dark:hidden" href="/">
-          <!--Image src={logoImage} alt="Logo" /-->
+          <Image src={LogoBlack} alt="Logo" />
         </a>
         <a class="hidden w-32 dark:block" href="/">
-          <!--Image src={darkLogo} alt="Logo" /-->
+          <Image src={LogoWhite} alt="Logo" />
         </a>
       </div>
 
