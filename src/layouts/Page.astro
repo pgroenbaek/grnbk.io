@@ -36,7 +36,7 @@ const { title, description, ogImage } = Astro.props;
       href={new URL("rss.xml", Astro.site)}
     />
   </head>
-  <body>
+  <body class="bg-bg text-text">
     <slot />
     <style is:global>
       /* Improve Page speed */

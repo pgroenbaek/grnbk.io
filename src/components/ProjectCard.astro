@@ -1,0 +1,77 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import { render } from "astro:content";
+import { components } from "@/components/mdx";
+interface Props {
+  project: CollectionEntry<"projects">;
+  loading?: "eager" | "lazy";
+}
+
+const { project, loading = "lazy" } = Astro.props;
+const { data } = project;
+const { Content } = await render(project);
+---
+
+<div
+  class="rounded-none bg-bg-subtle border border-border p-2 flex flex-col group"
+>
+  <div
+    class="relative rounded-none border border-border aspect-[2/1] overflow-hidden"
+  >
+    <Image
+      src={data.image.src}
+      alt={data.image.alt}
+      quality="max"
+      width={800}
+      height={400}
+      {loading}
+      decoding={loading === "eager" ? "sync" : "async"}
+      fetchpriority={loading === "eager" ? "high" : undefined}
+      layout="constrained"
+      class="object-cover object-center size-full group-hover:scale-[1.025] transition-transform will-change-transform duration-500 ease-out"
+    />
+  </div>
+  <div class="px-1 pt-2 flex flex-col gap-4 flex-1">
+    <div class="flex gap-2">
+      <div class="w-full">
+        <div class="flex items-center justify-between gap-2">
+          {
+            data.url ? (
+              <a
+                href={data.url}
+                class="text-accent underline font-bold text-lg flex items-center"
+                target="_blank"
+              >
+                {data.title}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  class="size-4 ml-1"
+                >
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6m-7 1l9-9m-5 0h5v5"
+                  />
+                </svg>
+              </a>
+            ) : (
+              <div class="text-text font-bold text-lg">{data.title}</div>
+            )
+          }
+          <div class="text-xs leading-5">{data.date}</div>
+        </div>
+        <div class="text-xs">{data.description}</div>
+      </div>
+    </div>
+    <div
+      class="text-sm mt-auto [&_code]:font-[monospace] [&_code]:bg-bg [&_code]:text-text [&_code]:px-0.5"
+    >
+      <Content {components} />
+    </div>
+  </div>
+</div>

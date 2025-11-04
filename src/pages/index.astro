@@ -2,27 +2,17 @@
 import Container from '@/components/Container.astro';
 import Section from '@/components/Section.astro';
 import DotTime from '@/components/DotTime.astro';
+import SocialLinks from '@/layouts/partials/SocialLinks.astro';
+import ProjectCard from "@/components/ProjectCard.astro";
 import DefaultLayout from '@/layouts/DefaultLayout.astro';
 import Page from '@/layouts/Page.astro';
 import image from "@/assets/authors/peter.webp";
-import { Icon } from "astro-icon/components";
+import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faGithub,
-  faXTwitter,
-  faLinkedin,
-  faInstagram,
-  faKeybase,
-} from "@fortawesome/free-brands-svg-icons";
 
-const socials = [
-  { href: 'https://github.com/pgroenbaek', name: 'GitHub', icon: faGithub },
-  { href: 'https://x.com/pgroenbaek', name: 'X', icon: faXTwitter },
-  { href: 'https://linkedin.com/in/yourprofile', name: 'LinkedIn', icon: faLinkedin },
-  { href: 'https://instagram.com/pgroenbaek', name: 'Instagram', icon: faInstagram },
-  { href: 'https://keybase.io/pgroenbaek', name: 'Keybase', icon: faKeybase },
-];
+const featured = (await getCollection("projects")).sort((a, b) =>
+  b.id.localeCompare(a.id)
+)[0];
 ---
 
 <Page title="Index" description="Index">
@@ -50,11 +40,12 @@ const socials = [
           </p>
           <div class="flex items-center gap-1.5 md:order-last">
             <DotTime />
-          <!--SocialLinks /-->
-        </div>
-        <div>
-          <p class="px-2 text-sm mb-1">Featured project</p>
-          <!--ProjectCard project={featured} loading="eager" /-->
+            <SocialLinks />
+          </div>
+          <div>
+            <p class="px-2 text-sm mb-1">Featured project</p>
+            <ProjectCard project={featured} loading="eager" />
+          </div>
         </div>
       </Section>
     </Container>

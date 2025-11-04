@@ -30,7 +30,12 @@ const rightMenu: MenuItem[] = [
   <!-- Left Menu -->
   <nav class="hidden md:flex flex-1 space-x-3 justify-end">
     {leftMenu.map((item) => (
-      <IconButton href={item.href} label={item.label} icon={item.icon} />
+      <IconButton
+        href={item.href}
+        label={item.label}
+        icon={item.icon}
+        variant={item.primary ? "primary" : undefined}
+      />
     ))}
   </nav>
 
@@ -43,7 +48,12 @@ const rightMenu: MenuItem[] = [
   <!-- Right Menu -->
   <nav class="hidden md:flex flex-1 space-x-3 justify-start">
     {rightMenu.map((item) => (
-      <IconButton href={item.href} label={item.label} icon={item.icon} />
+      <IconButton
+        href={item.href}
+        label={item.label}
+        icon={item.icon}
+        variant={item.primary ? "primary" : undefined}
+      />
     ))}
   </nav>
 

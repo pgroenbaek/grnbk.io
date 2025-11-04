@@ -1,5 +1,5 @@
 :root {
-  --color-accent: #00875f;
+  --color-accent-text: #00875f;
   --color-accent-light: #33b37a;
   --color-accent-dark: #005f40;
 
@@ -13,9 +13,9 @@
 .dark {
   --color-accent: #60fa94;
   --color-accent-light: #a9ffe0;
-  --color-accent-dark: #00c46a;
+  --color-accent-dark: #009f50;
 
-  --color-bg: #121212;
+  --color-bg: #161616;
   --color-surface: #1e1e1e;
   --color-border: #2c2c2c;
   --color-text: #f5f5f5;

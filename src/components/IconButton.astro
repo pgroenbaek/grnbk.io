@@ -1,20 +1,28 @@
 ---
 import { Icon } from "astro-icon/components";
+import type { HTMLAttributes } from "astro/types";
 
-interface Props {
-  href: string;
+interface Props extends HTMLAttributes<"a"> {
+  variant?: "primary" | "default";
   label: string;
-  icon?: string;
+  icon: string;
 }
-const { href, label, icon } = Astro.props;
+
+const { class: className, variant = "default", href, label, icon } = Astro.props;
 ---
 
 <a
   href={href}
-  class="py-1.5 px-3 inline-flex items-center border rounded-none select-none
-         [&>svg:first-child]:w-4 [&>svg:first-child]:h-4 [&>svg:first-child]:mr-2
-         hover:bg-bg-subtle border-border transition-colors
-         max-sm:p-2 max-sm:[&>svg:first-child]:w-5 max-sm:[&>svg:first-child]:h-5 max-sm:[&>svg:first-child]:mr-0"
+  class:list={[
+    "py-1.5 px-3 inline-flex items-center border rounded-none select-none",
+    "[&>svg:first-child]:size-4 [&>svg:first-child]:mr-2",
+    {
+      default: "hover:bg-bg-border border-border transition-colors",
+      primary:
+        "bg-accent-dark border-transparent font-semibold hover:brightness-90 transition-[filter]",
+    }[variant],
+    className,
+  ]}
 >
   {icon && <Icon name={`${icon}`} class="w-4 h-4 mr-2 max-sm:w-5 max-sm:h-5 max-sm:mr-0" />}
   <span class="max-sm:sr-only">{label}</span>
