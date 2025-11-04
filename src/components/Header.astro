@@ -1,101 +1,52 @@
 ---
 import Container from '@/components/Container.astro';
+import IconButton from '@/components/IconButton.astro';
 import LogoBlack from "@/assets/logo-black.svg";
 import LogoWhite from "@/assets/logo-white.svg";
 import { Image } from "astro:assets";
-import { Icon } from "astro-icon/components";
 
 interface MenuItem {
-  label: string;
   href: string;
-  external?: boolean;
-  badge?: string;
+  label: string;
+  icon?: string;
+  primary?: boolean;
 }
 
 const leftMenu: MenuItem[] = [
-  { label: "Home", href: "/" },
-  { label: "Blog", href: "/blog" },
+  { href: "/", label: "Home", icon: "heroicons:home-solid" },
+  { href: "/blog", label: "Blog", icon: "heroicons:document-text-solid"  },
 ];
 
 const rightMenu: MenuItem[] = [
-  { label: "About", href: "/about" },
-  { label: "Get In Touch", href: "/contact" },
+  { href: "/about", label: "About", icon: "heroicons:user-solid"  },
+  { href: "/contact", label: "Get In Touch", icon: "heroicons:chat-bubble-oval-left-solid", primary: true },
 ];
 ---
 
 <Container>
   <header class="py-4 relative">
-    <div class="flex items-center justify-between">
-      
-      <!-- Left Menu (Desktop) -->
-      <nav class="hidden md:flex space-x-6">
-        {leftMenu.map((item) => (
-          <a
-            href={item.href}
-            class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-400 dark:hover:text-gray-300"
-          >
-            {item.label}
-          </a>
-        ))}
-      </nav>
+    <div class="flex items-center">
 
-      <!-- Logo Centered -->
-      <a href="/" class="absolute left-1/2 transform -translate-x-1/2 w-32 flex-shrink-0">
-        <Image src={LogoBlack} alt="Logo" class="dark:hidden" />
-        <Image src={LogoWhite} alt="Logo" class="hidden dark:block" />
-      </a>
+  <!-- Left Menu -->
+  <nav class="hidden md:flex flex-1 space-x-3 justify-end">
+    {leftMenu.map((item) => (
+      <IconButton href={item.href} label={item.label} icon={item.icon} />
+    ))}
+  </nav>
 
-      <!-- Right Menu + Mobile Toggle -->
-      <div class="flex items-center space-x-4 ml-auto">
-        <!-- Desktop Right Menu -->
-        <nav class="hidden md:flex space-x-6">
-          {rightMenu.map((item) => (
-            <a
-              href={item.href}
-              class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-400 dark:hover:text-gray-300"
-            >
-              {item.label}
-            </a>
-          ))}
-        </nav>
+  <!-- Logo -->
+  <a href="/" class="w-40 flex justify-center flex-shrink-0 mx-12">
+    <Image src={LogoBlack} alt="Logo" class="dark:hidden" />
+    <Image src={LogoWhite} alt="Logo" class="hidden dark:block" />
+  </a>
 
-        <!-- Mobile Toggle -->
-        <button
-          id="menu-toggle"
-          aria-label="Toggle menu"
-          class="md:hidden text-gray-500 dark:text-gray-300 focus:outline-none"
-        >
-          <Icon name="heroicons:bars-3" class="w-6 h-6" id="menu-open-icon" />
-          <Icon name="heroicons:x-mark" class="w-6 h-6 hidden" id="menu-close-icon" />
-        </button>
-      </div>
+  <!-- Right Menu -->
+  <nav class="hidden md:flex flex-1 space-x-3 justify-start">
+    {rightMenu.map((item) => (
+      <IconButton href={item.href} label={item.label} icon={item.icon} />
+    ))}
+  </nav>
+
     </div>
-
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="mt-4 hidden md:hidden">
-      <div class="flex flex-col items-center space-y-2">
-        {[...leftMenu, ...rightMenu].map((item) => (
-          <a
-            href={item.href}
-            class="px-5 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-400 dark:hover:text-gray-300"
-          >
-            {item.label}
-          </a>
-        ))}
-      </div>
-    </div>
-
-    <script is:inline>
-      const menuButton = document.getElementById("menu-toggle");
-      const mobileMenu = document.getElementById("mobile-menu");
-      const openIcon = document.getElementById("menu-open-icon");
-      const closeIcon = document.getElementById("menu-close-icon");
-
-      menuButton.addEventListener("click", () => {
-        mobileMenu.classList.toggle("hidden");
-        openIcon.classList.toggle("hidden");
-        closeIcon.classList.toggle("hidden");
-      });
-    </script>
   </header>
 </Container>

@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://grnbk.io/sitemap-index.xml

@@ -1,13 +1,62 @@
 ---
 import Container from '@/components/Container.astro';
+import Section from '@/components/Section.astro';
+import DotTime from '@/components/DotTime.astro';
 import DefaultLayout from '@/layouts/DefaultLayout.astro';
 import Page from '@/layouts/Page.astro';
+import image from "@/assets/authors/peter.webp";
+import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faGithub,
+  faXTwitter,
+  faLinkedin,
+  faInstagram,
+  faKeybase,
+} from "@fortawesome/free-brands-svg-icons";
+
+const socials = [
+  { href: 'https://github.com/pgroenbaek', name: 'GitHub', icon: faGithub },
+  { href: 'https://x.com/pgroenbaek', name: 'X', icon: faXTwitter },
+  { href: 'https://linkedin.com/in/yourprofile', name: 'LinkedIn', icon: faLinkedin },
+  { href: 'https://instagram.com/pgroenbaek', name: 'Instagram', icon: faInstagram },
+  { href: 'https://keybase.io/pgroenbaek', name: 'Keybase', icon: faKeybase },
+];
 ---
 
 <Page title="Index" description="Index">
   <DefaultLayout title="Index" description="Index">
     <Container>
-      Index
+      <Section class="pt-0 sm:pt-8 grid grid-cols-1 md:grid-cols-2 gap-y-12 gap-x-4 items-center">
+        <div class="flex flex-col gap-6 max-w-md">
+          <Image
+            src={image}
+            alt=""
+            class="size-24 md:size-16 rounded-full bg-bg-subtle border border-border shrink-0"
+            loading="eager"
+            width={128}
+          />
+          <div>
+            <h2 class="text-accent">Peter Grønbæk Andersen</h2>
+            <h1 class="text-3xl/7 font-bold text-text text-balance">
+              Python expert &amp; full&#8209;stack web developer
+            </h1>
+          </div>
+          <p>
+            Full&#8209;stack web developer. Python wizard. Freelancer.
+            Product photographer. Danish. Open-source lover. Railway enthusiast.
+            Taming Linux beasts on the side.
+          </p>
+          <div class="flex items-center gap-1.5 md:order-last">
+            <DotTime />
+          <!--SocialLinks /-->
+        </div>
+        <div>
+          <p class="px-2 text-sm mb-1">Featured project</p>
+          <!--ProjectCard project={featured} loading="eager" /-->
+        </div>
+      </Section>
     </Container>
   </DefaultLayout>
 </Page>

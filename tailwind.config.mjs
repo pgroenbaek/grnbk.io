@@ -11,10 +11,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        gray: colors.neutral,
+        accent: 'var(--color-accent)',
+        'accent-light': 'var(--color-accent-light)',
+        'accent-dark': 'var(--color-accent-dark)',
+        bg: 'var(--color-bg)',
+        surface: 'var(--color-surface)',
+        border: 'var(--color-border)',
+        text: 'var(--color-text)',
+        muted: 'var(--color-muted)',
       },
       fontFamily: {
-        sans: ["Inter Variable", "Inter", ...defaultTheme.fontFamily.sans],
+        sans: ['Rubik', 'sans-serif'],
       },
       aspectRatio: {
         "4/3": "4 / 3",
