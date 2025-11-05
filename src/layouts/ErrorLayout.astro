@@ -1,20 +1,21 @@
 ---
-import { Image } from "astro:assets";
+import Button from '@/components/Button.astro';
 import LogoBlack from "@/assets/logo-black.svg";
 import LogoWhite from "@/assets/logo-white.svg";
+import ArrowLeftIcon from "@/assets/icons/arrow-left.svg";
+import { Image } from "astro:assets";
 
-const { children } = Astro.props;
 const { pathname } = new URL(Astro.request.url);
 ---
 
-<section class="container mx-auto my-8">
-  <main>
+<main>
+  <section class="container mx-auto my-8">
     <div class="flex flex-col items-center justify-center mt-12 text-center">
       <div class="flex items-center justify-center space-x-2 mb-8">
-        <a class="w-32 dark:hidden" href="/">
+        <a class="w-40 dark:hidden" href="/">
           <Image src={LogoBlack} alt="Logo" />
         </a>
-        <a class="hidden w-32 dark:block" href="/">
+        <a class="hidden w-40 dark:block" href="/">
           <Image src={LogoWhite} alt="Logo" />
         </a>
       </div>
@@ -26,8 +27,14 @@ const { pathname } = new URL(Astro.request.url);
       <pre class="text-lg text-gray-500 mb-8">Path: {pathname}</pre>
 
       <div>
-        <a href="/"><i class="fa-solid fa-arrow-left"></i> Home</a>
+        <Button
+          href="/"
+          label="Home"
+          >
+          <ArrowLeftIcon class="w-5 h-5" />
+          <span class="">Home</span>
+        </Button>
       </div>
     </div>
-  </main>
-</section>
+  </section>
+</main>

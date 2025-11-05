@@ -2,7 +2,6 @@
 import Container from '@/components/Container.astro';
 import Button from '@/components/Button.astro';
 import { Image } from "astro:assets";
-import type { SvgComponent } from 'astro/types';
 
 import LogoBlack from "@/assets/logo-black.svg";
 import LogoWhite from "@/assets/logo-white.svg";
@@ -33,39 +32,43 @@ const rightMenu: MenuItem[] = [
   <header class="py-4 relative">
     <div class="flex items-center">
 
-  <!-- Left Menu -->
-  <nav class="hidden md:flex flex-1 space-x-3 justify-end">
-    {leftMenu.map((menuItem) => (
-      <Button
-        href={menuItem.href}
-        label={menuItem.label}
-        variant={menuItem.primary ? "primary" : undefined}
-        >
-        <menuItem.icon class="w-5 h-5" />
-        <span class="">{menuItem.label}</span>
-      </Button>
-    ))}
-  </nav>
+      <!-- Left Menu -->
+      <nav class="hidden md:flex flex-1 space-x-3 justify-end">
+        {
+          leftMenu.map((menuItem) => (
+            <Button
+              href={menuItem.href}
+              label={menuItem.label}
+              variant={menuItem.primary ? "primary" : undefined}
+              >
+              <menuItem.icon class="w-5 h-5" />
+              <span class="">{menuItem.label}</span>
+            </Button>
+          ))
+        }
+      </nav>
 
-  <!-- Logo -->
-  <a href="/" class="w-40 flex justify-center flex-shrink-0 mx-12">
-    <Image src={LogoBlack} alt="Logo" class="dark:hidden" />
-    <Image src={LogoWhite} alt="Logo" class="hidden dark:block" />
-  </a>
+      <!-- Logo -->
+      <a href="/" class="w-40 flex justify-center flex-shrink-0 mx-12">
+        <Image src={LogoBlack} alt="Logo" class="dark:hidden" />
+        <Image src={LogoWhite} alt="Logo" class="hidden dark:block" />
+      </a>
 
-  <!-- Right Menu -->
-  <nav class="hidden md:flex flex-1 space-x-3 justify-start">
-    {rightMenu.map((menuItem) => (
-      <Button
-        href={menuItem.href}
-        label={menuItem.label}
-        variant={menuItem.primary ? "primary" : undefined}
-        >
-        <menuItem.icon class="w-5 h-5" />
-        <span class="">{menuItem.label}</span>
-      </Button>
-    ))}
-  </nav>
+      <!-- Right Menu -->
+      <nav class="hidden md:flex flex-1 space-x-3 justify-start">
+        {
+          rightMenu.map((menuItem) => (
+            <Button
+              href={menuItem.href}
+              label={menuItem.label}
+              variant={menuItem.primary ? "primary" : undefined}
+              >
+              <menuItem.icon class="w-5 h-5" />
+              <span class="">{menuItem.label}</span>
+            </Button>
+          ))
+        }
+      </nav>
 
     </div>
   </header>

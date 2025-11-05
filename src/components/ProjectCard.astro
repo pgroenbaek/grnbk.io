@@ -8,7 +8,7 @@ interface Props {
   loading?: "eager" | "lazy";
 }
 
-import LinkIcon from "@/assets/icons/link.svg";
+import LinkExternalIcon from "@/assets/icons/link-external.svg";
 
 const { project, loading = "lazy" } = Astro.props;
 const { data } = project;
@@ -46,7 +46,7 @@ const { Content } = await render(project);
                 target="_blank"
               >
                 {data.title}
-                <LinkIcon class="size-3 ml-1" />
+                <LinkExternalIcon class="size-3 ml-1" />
               </a>
             ) : (
               <div class="text-text font-bold text-lg">{data.title}</div>

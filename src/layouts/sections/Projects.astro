@@ -1,0 +1,17 @@
+---
+import Section from "@/components/Section";
+import ProjectCard from "@/components/ProjectCard.astro";
+
+const { id, title, projects } = Astro.props;
+---
+
+<Section {id}>
+  <Section.Title {id}>{title}</Section.Title>
+  <div class="grid grid-cols-1 md:grid-cols-2 mt-4 gap-6">
+    {
+      projects.map((project: any, i: number) => (
+        <ProjectCard {project} loading={i <= 1 ? "eager" : "lazy"} />
+      ))
+    }
+  </div>
+</Section>

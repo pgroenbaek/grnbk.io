@@ -8,7 +8,7 @@ const posts = await getCollection('blog', ({ data }) => !data.draft);
 ---
 
 <Page title="About" description="About me">
-  <DefaultLayout title="About" description="About me">
+  <DefaultLayout>
     <Container>
       <ul>
       {posts.map(post => (

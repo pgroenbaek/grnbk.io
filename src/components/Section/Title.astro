@@ -1,0 +1,29 @@
+---
+import LinkIcon from "@/assets/icons/link.svg";
+import type { HTMLTag } from 'astro/types'
+
+interface Props {
+  id?: string;
+  as?: HTMLTag;
+}
+
+const { id, as: HeadingTag = "h2" } = Astro.props as Props;
+
+const InnerTag = id ? "a" : "div";
+const href = id ? `/#${id}` : undefined;
+---
+
+<HeadingTag class="text-text font-semibold text-lg">
+  <InnerTag {href} class="group flex items-center space-x-2">
+    <span>
+      <slot />
+    </span>
+    {
+      id && (
+        <span class="group-hover:opacity-100 opacity-0 transition-opacity">
+          <LinkIcon class="w-5 h-5" />
+        </span>
+      )
+    }
+  </C>
+</As>
