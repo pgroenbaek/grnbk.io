@@ -1,5 +1,5 @@
 ---
-import IconButton from "@/components/IconButton.astro";
+import Button from "@/components/Button.astro";
 
 interface Props {
   href: string;
@@ -9,11 +9,11 @@ interface Props {
 const { href, label } = Astro.props;
 ---
 
-<IconButton
+<Button
   {href}
   target="_blank"
   class="!p-2 [&>svg:first-child]:!size-6 [&>svg:first-child]:!mr-0"
 >
   <slot />
   <span class="sr-only">{label}</span>
-</IconButton>
+</Button>

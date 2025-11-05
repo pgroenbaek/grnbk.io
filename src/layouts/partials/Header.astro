@@ -1,25 +1,31 @@
 ---
 import Container from '@/components/Container.astro';
-import IconButton from '@/components/IconButton.astro';
+import Button from '@/components/Button.astro';
+import { Image } from "astro:assets";
+import type { SvgComponent } from 'astro/types';
+
 import LogoBlack from "@/assets/logo-black.svg";
 import LogoWhite from "@/assets/logo-white.svg";
-import { Image } from "astro:assets";
+import HomeIcon from "@/assets/icons/home.svg";
+import BlogIcon from "@/assets/icons/blog.svg";
+import AboutIcon from "@/assets/icons/about.svg";
+import ContactIcon from "@/assets/icons/contact.svg";
 
 interface MenuItem {
   href: string;
   label: string;
-  icon?: string;
+  icon?: any;
   primary?: boolean;
 }
 
 const leftMenu: MenuItem[] = [
-  { href: "/", label: "Home", icon: "heroicons:home-solid" },
-  { href: "/blog", label: "Blog", icon: "heroicons:document-text-solid"  },
+  { href: "/", label: "Home", icon: HomeIcon },
+  { href: "/blog", label: "Blog", icon: BlogIcon },
 ];
 
 const rightMenu: MenuItem[] = [
-  { href: "/about", label: "About", icon: "heroicons:user-solid"  },
-  { href: "/contact", label: "Get In Touch", icon: "heroicons:chat-bubble-oval-left-solid", primary: true },
+  { href: "/about", label: "About", icon: AboutIcon },
+  { href: "/contact", label: "Get In Touch", icon: ContactIcon, primary: true },
 ];
 ---
 
@@ -29,13 +35,15 @@ const rightMenu: MenuItem[] = [
 
   <!-- Left Menu -->
   <nav class="hidden md:flex flex-1 space-x-3 justify-end">
-    {leftMenu.map((item) => (
-      <IconButton
-        href={item.href}
-        label={item.label}
-        icon={item.icon}
-        variant={item.primary ? "primary" : undefined}
-      />
+    {leftMenu.map((menuItem) => (
+      <Button
+        href={menuItem.href}
+        label={menuItem.label}
+        variant={menuItem.primary ? "primary" : undefined}
+        >
+        <menuItem.icon class="w-5 h-5" />
+        <span class="">{menuItem.label}</span>
+      </Button>
     ))}
   </nav>
 
@@ -47,13 +55,15 @@ const rightMenu: MenuItem[] = [
 
   <!-- Right Menu -->
   <nav class="hidden md:flex flex-1 space-x-3 justify-start">
-    {rightMenu.map((item) => (
-      <IconButton
-        href={item.href}
-        label={item.label}
-        icon={item.icon}
-        variant={item.primary ? "primary" : undefined}
-      />
+    {rightMenu.map((menuItem) => (
+      <Button
+        href={menuItem.href}
+        label={menuItem.label}
+        variant={menuItem.primary ? "primary" : undefined}
+        >
+        <menuItem.icon class="w-5 h-5" />
+        <span class="">{menuItem.label}</span>
+      </Button>
     ))}
   </nav>
 

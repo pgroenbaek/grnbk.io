@@ -39,13 +39,16 @@ const featured = (await getCollection("projects")).sort((a, b) =>
             Taming Linux beasts on the side.
           </p>
           <div class="flex items-center gap-1.5 md:order-last">
-            <DotTime />
             <SocialLinks />
           </div>
-          <div>
-            <p class="px-2 text-sm mb-1">Featured project</p>
-            <ProjectCard project={featured} loading="eager" />
+          <div class="flex items-center gap-1.5 md:order-last">
+            <DotTime />
           </div>
+        </div>
+
+        <div class="max-w-md">
+          <p class="px-2 text-sm mb-1">Featured project</p>
+          <ProjectCard project={featured} loading="eager" />
         </div>
       </Section>
     </Container>

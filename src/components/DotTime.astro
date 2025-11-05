@@ -1,45 +1,46 @@
 ---
+
 ---
-<span
-  class="rounded-none border border-border px-1.5 tabular-nums select-none text-text inline-flex gap-1 items-center"
->
+<span class="rounded-none border border-border px-1.5 tabular-nums select-none text-text inline-flex gap-1 items-center">
   <span class="size-2 inline-block rounded-full bg-red-500"></span>
   <span id="dot-time">00:00:00</span>
 </span>
 <span id="dot-timezone">CET</span>
+
 <script is:inline>
   (() => {
+    const config = {
+      timezone: "Europe/Copenhagen",
+      timezoneLabel: "CET",
+      timezoneDstLabel: "CEST",
+      standardTimeMatch: "Central European Standard Time"
+    };
+
     const getCETLabel = (date) => {
       const parts = new Intl.DateTimeFormat("en-US", {
-        timeZone: "Europe/Copenhagen",
+        timeZone: config.timezone,
         timeZoneName: "long"
       }).formatToParts(date);
 
-      // "Central European Standard Time" or "Central European Summer Time"
       const longName = parts.find(p => p.type === "timeZoneName").value;
-
-      return longName.includes("Standard") ? "CET" : "CEST";
+      return longName.includes(config.standardTimeMatch) ? config.timezoneLabel : config.timezoneDstLabel;
     };
 
     const updateTime = () => {
       const today = new Date();
       const time = new Intl.DateTimeFormat("en-US", {
-        timeZone: "Europe/Copenhagen",
+        timeZone: config.timezone,
         hour12: false,
         hour: "2-digit",
         minute: "2-digit",
         second: "2-digit"
       }).format(today);
 
-      const timeZoneLabel = getCETLabel(today);
-
       document.getElementById("dot-time").innerText = time;
-      document.getElementById("dot-timezone").innerText = timeZoneLabel;
+      document.getElementById("dot-timezone").innerText = getCETLabel(today);
     };
 
     updateTime();
-    return setInterval(() => {
-      updateTime();
-    }, 1000);
+    setInterval(updateTime, 1000);
   })();
 </script>
