@@ -12,21 +12,28 @@ const allProjects = await getCollection("projects");
 
 const featured = allProjects
   .filter((project) => project.data.featured)
+  .filter((project) => !project.data.draft)
   .sort((a, b) => b.id.localeCompare(a.id))[0] ?? null;
 
 const excludeFeatured = (project: typeof allProjects[number]) =>
   !featured || project.id !== featured.id;
 
 const projectsWork = allProjects
-  .filter((project) => project.data.type === "work" && excludeFeatured(project))
+  .filter((project) => project.data.type === "work")
+  .filter((project) => !project.data.draft)
+  .filter((project) => excludeFeatured(project))
   .sort((a, b) => b.id.localeCompare(a.id));
 
 const projectsOss = allProjects
-  .filter((project) => project.data.type === "oss" && excludeFeatured(project))
+  .filter((project) => project.data.type === "oss")
+  .filter((project) => excludeFeatured(project))
+  .filter((project) => !project.data.draft)
   .sort((a, b) => b.id.localeCompare(a.id));
 
 const projectsOssContrib = allProjects
-  .filter((project) => project.data.type === "osscontrib" && excludeFeatured(project))
+  .filter((project) => project.data.type === "osscontrib")
+  .filter((project) => excludeFeatured(project))
+  .filter((project) => !project.data.draft)
   .sort((a, b) => b.id.localeCompare(a.id));
 ---
 
