@@ -41,16 +41,22 @@ const projectsOssContrib = allProjects
   <DefaultLayout>
     <Container>
       <Hero project={featured} />
-      {projectsWork.length > 0 && (
-        <Projects id="work" title="Work" projects={projectsWork} />
-      )}
+      {
+        projectsWork.length > 0 && (
+          <Projects id="work" title="Work" projects={projectsWork} />
+        )
+      }
       <Testimonials />
-      {projectsOss.length > 0 && (
-        <Projects id="oss-projects" title="Open Source Projects" projects={projectsOss} />
-      )}
-      {projectsOssContrib.length > 0 && (
-        <Projects id="oss-contributions" title="Open Source Contributions" projects={projectsOssContrib} />
-      )}
+      {
+        projectsOss.length > 0 && (
+          <Projects id="oss-projects" title="Open Source Projects" projects={projectsOss} />
+        )
+      }
+      {
+        projectsOssContrib.length > 0 && (
+          <Projects id="oss-contributions" title="Open Source Contributions" projects={projectsOssContrib} />
+        )
+      }
       <Contact />
     </Container>
   </DefaultLayout>

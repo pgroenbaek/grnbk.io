@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { render } from "astro:content";
 import { components } from "@/components/mdx";
+
 interface Props {
   project: CollectionEntry<"projects">;
   loading?: "eager" | "lazy";
@@ -14,25 +15,43 @@ const { project, loading = "lazy" } = Astro.props;
 const { data } = project;
 const { Content } = await render(project);
 ---
-
-<div
-  class="rounded-none bg-bg-subtle border border-border p-2 flex flex-col group"
->
-  <div
-    class="relative rounded-none border border-border aspect-[2/1] overflow-hidden"
-  >
-    <Image
-      src={data.image.src}
-      alt={data.image.alt}
-      quality="max"
-      width={800}
-      height={400}
-      {loading}
-      decoding={loading === "eager" ? "sync" : "async"}
-      fetchpriority={loading === "eager" ? "high" : undefined}
-      layout="constrained"
-      class="object-cover object-center size-full group-hover:scale-[1.025] transition-transform will-change-transform duration-500 ease-out"
-    />
+<div class="rounded-none bg-bg-subtle border border-border p-2 flex flex-col group">
+  <div class="relative rounded-none border border-border aspect-[2/1] overflow-hidden">
+    {
+      data.url ? (
+        <a
+          href={data.url}
+          class="text-accent underline font-bold text-lg flex items-center"
+          target="_blank"
+        >
+          <Image
+            src={data.image.src}
+            alt={data.image.alt}
+            quality="max"
+            width={800}
+            height={400}
+            {loading}
+            decoding={loading === "eager" ? "sync" : "async"}
+            fetchpriority={loading === "eager" ? "high" : undefined}
+            layout="constrained"
+            class="object-cover object-center size-full group-hover:scale-[1.025] transition-transform will-change-transform duration-500 ease-out"
+          />
+        </a>
+      ) : (
+        <Image
+            src={data.image.src}
+            alt={data.image.alt}
+            quality="max"
+            width={800}
+            height={400}
+            {loading}
+            decoding={loading === "eager" ? "sync" : "async"}
+            fetchpriority={loading === "eager" ? "high" : undefined}
+            layout="constrained"
+            class="object-cover object-center size-full group-hover:scale-[1.025] transition-transform will-change-transform duration-500 ease-out"
+          />
+      )
+    }
   </div>
   <div class="px-1 pt-2 flex flex-col gap-4 flex-1">
     <div class="flex gap-2">

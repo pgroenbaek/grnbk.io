@@ -4,7 +4,7 @@ import DefaultLayout from '@/layouts/DefaultLayout.astro';
 import Page from '@/layouts/Page.astro';
 import { getCollection } from 'astro:content';
 
-const posts = await getCollection('blog', ({ data }) => !data.draft);
+const posts = await getCollection('posts', ({ data }) => !data.draft);
 ---
 
 <Page title="About" description="About me">
