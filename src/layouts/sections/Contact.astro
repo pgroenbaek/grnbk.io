@@ -1,0 +1,60 @@
+---
+import Section from "@/components/Section";
+import SocialLinks from "@/layouts/partials/SocialLinks.astro";
+
+const { id, title } = Astro.props;
+
+const hourlyRate = null;
+---
+
+<Section {id} class="pb-0">
+  <div class="flex items-center justify-between">
+    <Section.Title {id}>{title}</Section.Title>
+    <p class="text-text font-semibold text-lg">
+      {
+        hourlyRate != null && (
+          <>
+            {
+              new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "EUR",
+                maximumSignificantDigits: 2,
+              }).format(hourlyRate)
+            }/hour
+          </>
+        )
+      }
+    </p>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+    <div>
+      <p>
+        Feel free to reach out if you're looking for a developer, have a question
+        or just want to connect. I may be able to take on new projects depending on
+        my availability.
+      </p>
+      <div class="flex items-center mt-4">
+        <SocialLinks />
+      </div>
+    </div>    
+    <div>
+      <p>
+        <span class="font-bold text-text">Services</span>: all things Python and web development.
+        I have a versatile skillset and can pick up new tools or frameworks on the fly as needed.
+      </p>
+      <br/>
+      <p>
+        <span class="font-bold text-text">Examples</span>: frontend, backend, full&#8209;stack, scraping,
+        CMS/API integrations, data conversion, tooling, CI/CD, etc&hellip;
+      </p>
+    </div>
+    <div class="flex items-center">
+      <a
+        href="mailto:contact%40grnbk.io"
+        class="underline underline-offset-2 text-primary-contrast"
+      >
+        contact&#64;grnbk&#46;io
+    </a>
+    </div>
+  </div>
+</Section>
