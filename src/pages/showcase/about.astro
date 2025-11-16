@@ -1,0 +1,44 @@
+---
+import Contact from '@/layouts/sections/Contact.astro';
+import Section from "@/components/Section";
+import Container from '@/components/Container.astro';
+import DefaultLayout from '@/layouts/DefaultLayout.astro';
+import Page from '@/layouts/Page.astro';
+---
+
+<Page title="About" description="About me">
+  <DefaultLayout>
+    <Container>
+      <Section id="about">
+        <Section.Title id="about">About Me</Section.Title>
+        <div class="grid grid-cols-1 md:grid-cols-2 mt-4 gap-6">
+          - First time with Java back in 2009 in 9th grade (playing around with an obfuscated MMO client and private servers)
+          - Then HTML stuff and figuring out you could make dynamic pages with a funny little languages called PHP
+          - Making a vehicle list website that received around 120,000 unique visitors and 600,000 pageviews over the course of a year.
+            - People were needing that information to complete an "enter all vehicles"-type XBox achievement and it was the only place on the entire internet with the information to do that.
+            - My first experience with the internet being a powerful place.
+            - Can check it out here: https://web.archive.org/web/20100412025656/http://petera94.co.cc:80/justcause2/vehiclelist.php?type=bike
+          - Then did a masters degree in Software Engineering
+          - Then working corporate job for a number of years
+            - For example involved with an IoT project for a Danish municipality, a pilot project for a danish govermental agency that ended up being picked up at the EU-level, and sat with critical log-in infrastructure.  
+          - Now doing freelance and open source work
+        </div>
+      </Section>
+      <Section id="technologies">
+        <Section.Title id="technologies">Technologies I Work With</Section.Title>
+        <div class="grid grid-cols-1 md:grid-cols-2 mt-4 gap-6">
+          I have been and am doing all sorts of stuff with many many different frameworks, languages and technologies picking up and learning stuff as I've gone along.
+            - All sorts of stuff, for example doing a project the university's supercomputer in 2017.
+        </div>
+      </Section>
+      <Section id="technologies">
+        <Section.Title id="technologies">What Else I Am Up To</Section.Title>
+        <div class="grid grid-cols-1 md:grid-cols-2 mt-4 gap-6">
+          Product photography
+          Railway enthusiast and simulator stuff
+        </div>
+      </Section>
+      <Contact id="contact" title="Contact" />
+    </Container>
+  </DefaultLayout>
+</Page>

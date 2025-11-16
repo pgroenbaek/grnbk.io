@@ -6,7 +6,7 @@ import ProjectCard from "@/components/ProjectCard.astro";
 import profileImage from "@/assets/authors/peter.webp";
 import { Image } from "astro:assets";
 
-const { project } = Astro.props;
+const { project, showLinks = true } = Astro.props;
 ---
 
 <Section class="pt-0 sm:pt-8 grid grid-cols-1 md:grid-cols-2 gap-y-12 gap-x-4 items-center">
@@ -29,18 +29,24 @@ const { project } = Astro.props;
       Product photographer. Danish. Open-source lover. Railway enthusiast.
       Taming Linux beasts on the side.
     </p>
-    <div class="flex items-center gap-1.5 md:order-last">
-      <SocialLinks />
-    </div>
+    {
+      showLinks && (
+        <div class="flex items-center gap-1.5 md:order-last">
+          <SocialLinks />
+        </div>
+      )
+    }
     <div class="flex items-center gap-1.5 md:order-last">
       <DotTime />
     </div>
   </div>
 
   <div class="max-w-md">
-    {project && (
-      <p class="px-2 text-sm mb-1">Featured project</p>
-      <ProjectCard project={project} loading="eager" />
-    )}
+    {
+      project && (
+        <p class="px-2 text-sm mb-1">Featured project</p>
+        <ProjectCard project={project} loading="eager" showLinks={showLinks} />
+      )
+    }
   </div>
 </Section>

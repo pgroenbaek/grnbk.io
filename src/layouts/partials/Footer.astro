@@ -1,27 +1,13 @@
 ---
 import Container from '@/components/Container.astro';
 import ThemeSwitch from '@/components/ThemeSwitch.astro';
-
-import GitHubIcon from "@/assets/icons/github.svg";
-import XIcon from "@/assets/icons/x.svg";
-import LinkedInIcon from "@/assets/icons/linkedin.svg";
-import InstagramIcon from "@/assets/icons/instagram.svg";
-import KeybaseIcon from "@/assets/icons/keybase.svg";
-
-const socials = [
-  { href: 'https://github.com/pgroenbaek', name: 'GitHub', icon: GitHubIcon },
-  { href: 'https://linkedin.com/in/yourprofile', name: 'LinkedIn', icon: LinkedInIcon },
-  { href: 'https://x.com/pgroenbaek', name: 'X', icon: XIcon },
-  { href: 'https://instagram.com/pgroenbaek', name: 'Instagram', icon: InstagramIcon },
-  { href: 'https://keybase.io/pgroenbaek', name: 'Keybase', icon: KeybaseIcon },
-];
 ---
 
 <Container class="mt-10 border-t border-gray-100 dark:border-gray-800">
   <footer class="flex flex-col items-center gap-4 py-6">
     
     <!-- Social Icons -->
-    <div class="flex gap-4">
+    <!--div class="flex gap-4">
       {socials.map((socialItem) => (
         <a
           href={socialItem.href}
@@ -33,7 +19,7 @@ const socials = [
           <socialItem.icon class="w-5 h-5" />
         </a>
       ))}
-    </div>
+    </div-->
 
     <!-- Copyright -->
     <div class="text-sm text-center text-gray-600 dark:text-gray-400">

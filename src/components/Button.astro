@@ -13,7 +13,7 @@ const { class: className, variant = "default", ...rest } = Astro.props;
     "py-1.5 px-3 inline-flex items-center border rounded-none select-none",
     "[&>svg:first-child]:size-4 [&>svg:first-child]:mr-2",
     {
-      default: "hover:bg-surface border-border transition-all hover:brightness-90 dark:hover:brightness-108",
+      default: "bg-surface border-border transition-all hover:brightness-90 dark:hover:brightness-108",
       primary: "bg-primary-bg text-primary-text border-border font-semibold hover:brightness-108 dark:hover:brightness-90 transition-[filter]",
     }[variant],
     className,

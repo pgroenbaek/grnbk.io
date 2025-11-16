@@ -1,0 +1,73 @@
+---
+import Container from '@/components/Container.astro';
+import Button from '@/components/Button.astro';
+import { Image } from "astro:assets";
+
+import LogoBlack from "@/assets/logo-black.svg";
+import LogoWhite from "@/assets/logo-white.svg";
+import HomeIcon from "@/assets/icons/home.svg";
+import AboutIcon from "@/assets/icons/about.svg";
+
+interface MenuItem {
+  href: string;
+  label: string;
+  icon?: any;
+  primary?: boolean;
+}
+
+const leftMenu: MenuItem[] = [
+  { href: "/showcase", label: "Home", icon: HomeIcon },
+];
+
+const rightMenu: MenuItem[] = [
+  { href: "/showcase/about", label: "About", icon: AboutIcon },
+];
+---
+
+<Container>
+  <header class="py-4 relative">
+    <div class="flex items-center">
+
+      <!-- Left Menu -->
+      <nav class="flex flex-1 space-x-3 justify-end">
+        {
+          leftMenu.map((menuItem) => (
+            <Button
+              href={menuItem.href}
+              label={menuItem.label}
+              variant={menuItem.primary ? "primary" : undefined}
+              class="px-3 py-1.5 max-sm:!p-2 max-sm:[&>svg:first-child]:!size-6 max-sm:[&>svg:first-child]:!mr-0 whitespace-nowrap"
+            >
+              <menuItem.icon class="w-6 h-6" />
+              <span class="hidden sm:inline">{menuItem.label}</span>
+            </Button>
+          ))
+        }
+      </nav>
+
+      <!-- Logo -->
+      <div class="w-40 flex justify-center flex-shrink-0 mx-6 md:mx-12">
+        <Image src={LogoBlack} alt="Logo" loading="eager" class="dark:hidden transition-all hover:brightness-108" />
+        <Image src={LogoWhite} alt="Logo" loading="eager" class="hidden dark:block transition-all hover:brightness-90" />
+      </div>
+
+      <!-- Right Menu -->
+      <nav class="flex flex-1 space-x-3 justify-start">
+        {
+          rightMenu.map((menuItem) => (
+            <Button
+              href={menuItem.href}
+              label={menuItem.label}
+              variant={menuItem.primary ? "primary" : undefined}
+              class="px-3 py-1.5 max-sm:!p-2 max-sm:[&>svg:first-child]:!size-6 max-sm:[&>svg:first-child]:!mr-0 whitespace-nowrap"
+            >
+              <menuItem.icon class="w-6 h-6" />
+              <span class="hidden sm:inline">{menuItem.label}</span>
+            </Button>
+          ))
+        }
+      </nav>
+
+    </div>
+  </header>
+</Container>

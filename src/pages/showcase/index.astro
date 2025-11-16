@@ -1,0 +1,62 @@
+---
+import Container from '@/components/Container.astro';
+import Hero from '@/layouts/sections/Hero.astro';
+import Projects from '@/layouts/sections/Projects.astro';
+import Testimonials from '@/layouts/sections/Testimonials.astro';
+import Contact from '@/layouts/sections/Contact.astro';
+import ShowcaseLayout from '@/layouts/ShowcaseLayout.astro';
+import Page from '@/layouts/Page.astro';
+import { getCollection } from "astro:content";
+
+const allProjects = await getCollection("projects");
+
+const featured = allProjects
+  .filter((project) => project.data.featured)
+  .filter((project) => !project.data.draft)
+  .sort((a, b) => b.id.localeCompare(a.id))[0] ?? null;
+
+const excludeFeatured = (project: typeof allProjects[number]) =>
+  !featured || project.id !== featured.id;
+
+const projectsWork = allProjects
+  .filter((project) => project.data.type === "work")
+  .filter((project) => !project.data.draft)
+  .filter((project) => excludeFeatured(project))
+  .sort((a, b) => b.id.localeCompare(a.id));
+
+const projectsOss = allProjects
+  .filter((project) => project.data.type === "oss")
+  .filter((project) => excludeFeatured(project))
+  .filter((project) => !project.data.draft)
+  .sort((a, b) => b.id.localeCompare(a.id));
+
+const projectsOssContrib = allProjects
+  .filter((project) => project.data.type === "osscontrib")
+  .filter((project) => excludeFeatured(project))
+  .filter((project) => !project.data.draft)
+  .sort((a, b) => b.id.localeCompare(a.id));
+---
+
+<Page title="Index" description="Index">
+  <ShowcaseLayout>
+    <Container>
+      <Hero project={featured} showLinks={false} />
+      {
+        projectsWork.length > 0 && (
+          <Projects id="work" title="Work" projects={projectsWork} showLinks={false} />
+        )
+      }
+      <Testimonials />
+      {
+        projectsOss.length > 0 && (
+          <Projects id="oss-projects" title="Open Source Projects" projects={projectsOss} showLinks={false} />
+        )
+      }
+      {
+        projectsOssContrib.length > 0 && (
+          <Projects id="oss-contributions" title="Open Source Contributions" projects={projectsOssContrib} showLinks={false} />
+        )
+      }
+    </Container>
+  </ShowcaseLayout>
+</Page>
