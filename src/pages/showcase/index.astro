@@ -35,6 +35,12 @@ const projectsOssContrib = allProjects
   .filter((project) => excludeFeatured(project))
   .filter((project) => !project.data.draft)
   .sort((a, b) => b.id.localeCompare(a.id));
+
+const projectsWebsites = allProjects
+  .filter((project) => project.data.type === "website")
+  .filter((project) => excludeFeatured(project))
+  .filter((project) => !project.data.draft)
+  .sort((a, b) => b.id.localeCompare(a.id));
 ---
 
 <Page title="Index" description="Index">
@@ -50,6 +56,11 @@ const projectsOssContrib = allProjects
       {
         projectsOss.length > 0 && (
           <Projects id="oss-projects" title="Open Source Projects" projects={projectsOss} showLinks={false} />
+        )
+      }
+      {
+        projectsWebsites.length > 0 && (
+          <Projects id="websites" title="Websites I Run" projects={projectsWebsites} showLinks={false} />
         )
       }
       {

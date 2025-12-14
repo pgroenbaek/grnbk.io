@@ -2,12 +2,12 @@
 import Contact from '@/layouts/sections/Contact.astro';
 import Section from "@/components/Section";
 import Container from '@/components/Container.astro';
-import DefaultLayout from '@/layouts/DefaultLayout.astro';
+import ShowcaseLayout from '@/layouts/ShowcaseLayout.astro';
 import Page from '@/layouts/Page.astro';
 ---
 
 <Page title="About" description="About me">
-  <DefaultLayout>
+  <ShowcaseLayout>
     <Container>
       <Section id="about">
         <Section.Title id="about">About Me</Section.Title>
@@ -38,7 +38,6 @@ import Page from '@/layouts/Page.astro';
           Railway enthusiast and simulator stuff
         </div>
       </Section>
-      <Contact id="contact" title="Contact" />
     </Container>
-  </DefaultLayout>
+  </ShowcaseLayout>
 </Page>
