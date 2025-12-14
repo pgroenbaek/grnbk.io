@@ -1,0 +1,70 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  post: CollectionEntry<"posts">;
+}
+
+const { post } = Astro.props;
+const { data } = post;
+---
+
+<article class="rounded-none bg-bg-subtle border border-border p-2 flex gap-4 group">
+  {data.image && (
+    <a
+      href={`/blog/${post.id}/`}
+      class="shrink-0 w-48 aspect-[3/2] border border-border overflow-hidden"
+    >
+      <Image
+        src={data.image.src}
+        alt="Image"
+        width={400}
+        height={267}
+        class="object-cover size-full group-hover:scale-[1.025] transition-transform duration-500"
+      />
+    </a>
+  )}
+
+  <div class="flex flex-col gap-2 flex-1">
+    <header class="flex flex-col gap-1">
+      <a
+        href={`/blog/${post.id}/`}
+        class="text-lg font-bold hover:underline"
+      >
+        {data.title}
+      </a>
+
+      <div class="flex items-center gap-3 text-xs text-text-subtle">
+        <time>
+          {data.date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          })}
+        </time>
+
+        {data.categories && (
+          <div class="flex gap-2">
+            {data.categories.map((cat) => (
+              <span class="border border-border px-1.5 py-0.5">
+                {cat}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+    </header>
+
+    <p class="text-sm text-text-subtle">
+      {data.description}
+    </p>
+
+    <a
+      href={`/blog/${post.id}/`}
+      class="text-sm text-accent-subtle underline w-fit"
+    >
+      Read more →
+    </a>
+  </div>
+</article>

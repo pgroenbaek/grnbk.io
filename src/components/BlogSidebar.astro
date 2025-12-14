@@ -1,0 +1,63 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  posts: CollectionEntry<"posts">[];
+  categories: string[];
+}
+
+const { posts, categories } = Astro.props;
+---
+
+<aside class="flex flex-col gap-8">
+  {/* Search */}
+  <div>
+    <label class="text-sm font-bold mb-1 block">Search</label>
+    <input
+      type="search"
+      placeholder="Search posts…"
+      class="w-full border border-border bg-bg px-2 py-1 text-sm outline-none"
+    />
+  </div>
+
+  {/* Categories */}
+  <div>
+    <h2 class="text-sm font-bold mb-2">Categories</h2>
+    <ul class="flex flex-col gap-1 text-sm">
+      {categories.map((category) => (
+        <li>
+          <a
+            href={`/blog/category/${category.toLowerCase()}/`}
+            class="hover:underline"
+          >
+            {category}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  {/* Recent Posts */}
+  <div>
+    <h2 class="text-sm font-bold mb-2">Recent Posts</h2>
+    <ul class="flex flex-col gap-2">
+      {posts.slice(0, 5).map((post) => (
+        <li>
+          <a
+            href={`/blog/${post.id}/`}
+            class="text-sm hover:underline"
+          >
+            {post.data.title}
+          </a>
+          <div class="text-xs text-text-subtle">
+            {post.data.date.toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            })}
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</aside>
