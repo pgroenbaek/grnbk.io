@@ -2,32 +2,33 @@
 import Container from "@/components/Container.astro";
 import DefaultLayout from "@/layouts/DefaultLayout.astro";
 import Page from "@/layouts/Page.astro";
-
 import BlogListItem from "@/components/BlogListItem.astro";
 import BlogSidebar from "@/components/BlogSidebar.astro";
+import { sortByFrequency } from "@/utils/sorting";
 
 import { getCollection } from "astro:content";
 
 const posts = await getCollection("posts", ({ data }) => !data.draft);
 
-const categories = [
-  ...new Set(posts.flatMap((p) => p.data.categories ?? [])),
-];
+const allPosts = posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const categories = sortByFrequency(posts.flatMap(p => p.data.categories ?? []));
+const technologies = sortByFrequency(posts.flatMap(p => p.data.technologies ?? []));
+const tags = sortByFrequency(posts.flatMap(p => p.data.tags ?? []));
 ---
 
 <Page title="Blog" description="Blog">
   <DefaultLayout>
     <Container>
       <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_300px] gap-8">
-        {/* Items */}
         <main class="flex flex-col gap-4">
-          {posts.map((post) => (
-            <BlogListItem post={post} />
-          ))}
+          {
+            allPosts.map((post) => (
+              <BlogListItem post={post} />
+            ))
+          }
         </main>
-
-        {/* Sidebar */}
-        <BlogSidebar posts={posts} categories={categories} />
+        <BlogSidebar posts={allPosts} categories={categories} technologies={technologies} tags={tags} />
       </div>
     </Container>
   </DefaultLayout>

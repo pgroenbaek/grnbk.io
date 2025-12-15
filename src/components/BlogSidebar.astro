@@ -1,16 +1,19 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import Technology from "./Technology.astro";
+import { formatDate } from "../utils/formatting";
 
 interface Props {
   posts: CollectionEntry<"posts">[];
   categories: string[];
+  technologies: string[];
+  tags: string[];
 }
 
-const { posts, categories } = Astro.props;
+const { posts, categories, technologies, tags } = Astro.props;
 ---
 
 <aside class="flex flex-col gap-8">
-  {/* Search */}
   <div>
     <label class="text-sm font-bold mb-1 block">Search</label>
     <input
@@ -20,41 +23,68 @@ const { posts, categories } = Astro.props;
     />
   </div>
 
-  {/* Categories */}
   <div>
     <h2 class="text-sm font-bold mb-2">Categories</h2>
-    <ul class="flex flex-col gap-1 text-sm">
-      {categories.map((category) => (
-        <li>
-          <a
-            href={`/blog/category/${category.toLowerCase()}/`}
-            class="hover:underline"
-          >
-            {category}
-          </a>
-        </li>
-      ))}
-    </ul>
+    {categories && (
+        <div class="flex flex-wrap gap-2 text-xs">
+          {categories.map((category) => (
+            <span class="border border-border px-1.5 py-0.5">
+              <a
+                href={`/blog/category/${category.toLowerCase()}`}
+                class="hover:underline"
+              >
+                {category}
+              </a>
+            </span>
+          ))}
+        </div>
+      )}
   </div>
 
-  {/* Recent Posts */}
+  <div>
+    <h2 class="text-sm font-bold mb-2">Technologies</h2>
+    {technologies && (
+        <div class="flex flex-wrap gap-2 text-xs">
+          {technologies.map((technology) => (
+            <div class="py-0.5">
+              <Technology id={technology} hrefOverride={`/blog/technology/${technology.toLowerCase()}`} boldText={false}/>
+            </div>
+          ))}
+        </div>
+      )}
+  </div>
+
+  <div>
+    <h2 class="text-sm font-bold mb-2">Tags</h2>
+    {tags && (
+        <div class="flex flex-wrap gap-2 text-xs">
+          {tags.map((tag) => (
+            <span class="border border-border px-1.5 py-0.5">
+              <a
+                href={`/blog/tag/${tag.toLowerCase()}`}
+                class="hover:underline"
+              >
+                {tag}
+              </a>
+            </span>
+          ))}
+        </div>
+      )}
+  </div>
+
   <div>
     <h2 class="text-sm font-bold mb-2">Recent Posts</h2>
     <ul class="flex flex-col gap-2">
       {posts.slice(0, 5).map((post) => (
         <li>
           <a
-            href={`/blog/${post.id}/`}
+            href={`/blog/${post.id}`}
             class="text-sm hover:underline"
           >
             {post.data.title}
           </a>
           <div class="text-xs text-text-subtle">
-            {post.data.date.toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "short",
-              day: "numeric",
-            })}
+            {formatDate(post.data.date)}
           </div>
         </li>
       ))}

@@ -3,10 +3,12 @@ import { getEntry, render } from "astro:content";
 
 interface Props {
   id: string;
+  hrefOverride?: string;
   showLinks?: boolean;
+  boldText?: boolean;
 }
 
-const { id, showLinks = true } = Astro.props;
+const { id, hrefOverride, showLinks = true, boldText = true } = Astro.props;
 
 const technology = await getEntry("technologies", id);
 
@@ -16,18 +18,22 @@ if (!technology) {
 
 const { name, href } = technology.data;
 const { Content } = await render(technology);
+
+const finalHref = hrefOverride ?? href ?? undefined;
+
+const textClass = `leading-5 text-xs ${boldText ? "font-semibold" : "font-normal"}`;
 ---
 
-{showLinks && href ? (
+{showLinks && finalHref ? (
   <a
-    href={href}
+    href={finalHref}
     target="_blank"
     class="bg-bg border rounded-none -my-2 align-middle border-border px-1 select-none inline-flex items-center hover:underline hover:text-text transition-colors underline-offset-2"
   >
     <span class="contents [&>svg]:size-3 [&>svg]:mr-1">
       <Content />
     </span>
-    <span class="leading-5 text-xs font-semibold">{name}</span>
+    <span class={textClass}>{name}</span>
   </a>
 ) : (
   <span
@@ -36,6 +42,6 @@ const { Content } = await render(technology);
     <span class="contents [&>svg]:size-3 [&>svg]:mr-1">
       <Content />
     </span>
-    <span class="leading-5 text-xs font-semibold">{name}</span>
+    <span class={textClass}>{name}</span>
   </span>
 )}
