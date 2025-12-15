@@ -20,15 +20,20 @@ const tags = sortByFrequency(posts.flatMap(p => p.data.tags ?? []));
 <Page title="Blog" description="Blog">
   <DefaultLayout>
     <Container>
-      <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_300px] gap-8">
-        <main class="flex flex-col gap-4">
-          {
-            allPosts.map((post) => (
-              <BlogListItem post={post} />
-            ))
-          }
-        </main>
-        <BlogSidebar posts={allPosts} categories={categories} technologies={technologies} tags={tags} />
+      <div class="flex flex-col gap-6">
+        <h1 class="text-3xl font-bold">
+          Blog
+        </h1>
+        <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_300px] gap-8">
+          <main class="flex flex-col gap-4">
+            {
+              allPosts.map((post) => (
+                <BlogListItem post={post} />
+              ))
+            }
+          </main>
+          <BlogSidebar posts={allPosts} categories={categories} technologies={technologies} tags={tags} />
+        </div>
       </div>
     </Container>
   </DefaultLayout>

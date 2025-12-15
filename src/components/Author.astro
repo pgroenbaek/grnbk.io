@@ -1,0 +1,23 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  name: string;
+  image: ImageMetadata;
+}
+
+const { name, image } = Astro.props;
+---
+
+<div class="flex items-center hover:text-primary text-sm">
+  {image && (
+    <Image
+      src={image}
+      alt={name}
+      height={50}
+      width={50}
+      class="mr-2 h-6 w-6 rounded-full"
+    />
+  )}
+  <h2 class="text-accent">{name}</h2>
+</div>
