@@ -1,9 +1,8 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import Technology from "./Technology.astro";
-import { formatDate } from "@/utils/formatting";
-
+import Technology from "@/components/Technology.astro";
 import SearchIcon from "@/assets/icons/search.svg";
+import { formatDate } from "@/utils/formatting";
 
 interface Props {
   posts: CollectionEntry<"posts">[];
@@ -17,65 +16,66 @@ const { posts, categories, technologies, tags } = Astro.props;
 
 <aside class="flex flex-col gap-8">
   <div>
-  <label class="text-sm font-bold mb-1 block">Search</label>
-
-  <div class="relative">
-    <SearchIcon class="pointer-events-none absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-muted"/>
-    <input
-      type="search"
-      placeholder="Search posts…"
-      class="w-full border border-border bg-bg pl-8 pr-2 py-1 text-sm outline-none"
-    />
+    <label class="text-sm font-bold mb-1 block">Search</label>
+    <div class="relative">
+      <SearchIcon class="pointer-events-none absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-muted"/>
+      <input
+        type="search"
+        placeholder="Search posts…"
+        class="w-full border border-border bg-bg pl-8 pr-2 py-1 text-sm outline-none"
+      />
+    </div>
   </div>
-</div>
 
   <div>
     <h2 class="text-sm font-bold mb-2">Categories</h2>
-    {categories && (
-        <div class="flex flex-wrap gap-2 text-xs">
-          {categories.map((category) => (
-            <span class="border border-border px-1.5 py-0.5">
-              <a
-                href={`/blog/category/${category.toLowerCase()}`}
-                class="hover:underline"
-              >
-                {category}
-              </a>
-            </span>
-          ))}
-        </div>
-      )}
+    <div class="flex flex-wrap gap-2 text-xs">
+      {categories.map((category) => (
+        <button
+          type="button"
+          data-filter
+          data-key="category"
+          data-value={category}
+          class="filter-btn border border-border px-1.5 py-0.5"
+        >
+          {category}
+        </button>
+      ))}
+    </div>
   </div>
 
   <div>
     <h2 class="text-sm font-bold mb-2">Technologies</h2>
-    {technologies && (
-      <div class="flex flex-wrap gap-2 text-xs">
-        {technologies.map((technology) => (
-          <div class="py-0.5">
-            <Technology id={technology} hrefOverride={`/blog/technology/${technology.toLowerCase()}`} boldText={false}/>
-          </div>
-        ))}
-      </div>
-    )}
+    <div class="flex flex-wrap gap-2 text-xs">
+      {technologies.map((technology) => (
+        <button
+          type="button"
+          data-filter
+          data-key="technology"
+          data-value={technology}
+          class="filter-btn"
+        >
+          <Technology id={technology} boldText={false} showLinks={false} />
+        </button>
+      ))}
+    </div>
   </div>
 
   <div>
     <h2 class="text-sm font-bold mb-2">Tags</h2>
-    {tags && (
-        <div class="flex flex-wrap gap-2 text-xs">
-          {tags.map((tag) => (
-            <span class="border border-border px-1.5 py-0.5">
-              <a
-                href={`/blog/tag/${tag.toLowerCase()}`}
-                class="hover:underline"
-              >
-                #{tag}
-              </a>
-            </span>
-          ))}
-        </div>
-      )}
+    <div class="flex flex-wrap gap-2 text-xs">
+      {tags.map((tag) => (
+        <button
+          type="button"
+          data-filter
+          data-key="tag"
+          data-value={tag}
+          class="filter-btn border border-border px-1.5 py-0.5"
+        >
+          #{tag}
+        </button>
+      ))}
+    </div>
   </div>
 
   <div>
@@ -97,3 +97,49 @@ const { posts, categories, technologies, tags } = Astro.props;
     </ul>
   </div>
 </aside>
+
+<script>
+  function toggleFilter(key, value) {
+    const params = new URLSearchParams(window.location.search);
+    const values = params.getAll(key);
+
+    params.delete(key);
+
+    if (!values.includes(value)) {
+      values.forEach(v => params.append(key, v));
+      params.append(key, value);
+    } else {
+      values
+        .filter(v => v !== value)
+        .forEach(v => params.append(key, v));
+    }
+
+    const query = params.toString();
+    history.pushState(null, "", query ? `/blog?${query}` : "/blog");
+
+    window.dispatchEvent(new Event("popstate"));
+    updateActiveStates();
+  }
+
+  function updateActiveStates() {
+    const params = new URLSearchParams(window.location.search);
+
+    document.querySelectorAll("[data-filter]").forEach((element) => {
+      const key = element.dataset.key;
+      const value = element.dataset.value;
+
+      const active = params.getAll(key).includes(value);
+      element.classList.toggle("is-active", active);
+    });
+  }
+
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-filter]");
+    if (!btn) return;
+
+    toggleFilter(btn.dataset.key, btn.dataset.value);
+  });
+
+  updateActiveStates();
+  window.addEventListener("popstate", updateActiveStates);
+</script>

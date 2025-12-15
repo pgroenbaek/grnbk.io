@@ -11,7 +11,15 @@ const { post } = Astro.props;
 const { data } = post;
 ---
 
-<article class="rounded-none bg-bg-subtle border border-border p-2 flex gap-4 group">
+<article
+  data-post
+  data-title={data.title.toLowerCase()}
+  data-description={(data.description ?? "").toLowerCase()}
+  data-categories={(data.categories ?? []).join(",")}
+  data-tags={(data.tags ?? []).join(",")}
+  data-technologies={(data.technologies ?? []).join(",")}
+  class="blog-post hidden rounded-none bg-bg-subtle border border-border p-2 flex gap-4 group"
+>
   {data.image && (
     <a
       href={`/blog/${post.id}`}
@@ -29,24 +37,19 @@ const { data } = post;
 
   <div class="flex flex-col gap-2 flex-1">
     <header class="flex flex-col gap-1">
-      <a
-        href={`/blog/${post.id}`}
-        class="text-lg font-bold hover:underline"
-      >
+      <a href={`/blog/${post.id}`} class="text-lg font-bold hover:underline">
         {data.title}
       </a>
 
       <div class="flex items-center gap-3 text-xs text-text-subtle">
-        <time>
-          {formatDate(data.date)}
-        </time>
+        <time>{formatDate(data.date)}</time>
 
         {data.categories && (
           <div class="flex gap-2">
             {data.categories.map((category) => (
               <span class="border border-border px-1.5 py-0.5">
                 <a
-                  href={`/blog/category/${category.toLowerCase()}`}
+                  href={`/blog?category=${encodeURIComponent(category)}`}
                   class="hover:underline"
                 >
                   {category}
@@ -58,9 +61,7 @@ const { data } = post;
       </div>
     </header>
 
-    <p class="text-sm text-text-subtle">
-      {data.description}
-    </p>
+    <p class="text-sm text-text-subtle">{data.description}</p>
 
     <a
       href={`/blog/${post.id}`}

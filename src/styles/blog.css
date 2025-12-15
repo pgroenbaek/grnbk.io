@@ -1,0 +1,11 @@
+.blog-post {
+  display: none;
+}
+
+.blog-post.is-visible {
+  display: flex;
+}
+
+.filter-btn.is-active {
+  background-color: var(--color-border);
+}
