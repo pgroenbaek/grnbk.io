@@ -51,19 +51,19 @@ export default function BlogOverview({ posts, technologyEntries }: BlogOverviewP
       const postTags = post.data.tags?.map(t => t.toLowerCase()) ?? [];
       const postTechnologies = post.data.technologies?.map(t => t.toLowerCase()) ?? [];
 
-      if (filters.search && !title.includes(filters.search) && !description.includes(filters.search)) {
+      if (filters.search && !title.includes(filters.search.toLowerCase()) && !description.includes(filters.search.toLowerCase())) {
         return false;
       }
 
-      if (filters.categories.length && !filters.categories.some(c => postCategories.includes(c))) {
+      if (filters.categories.length && !filters.categories.some(category => postCategories.includes(category.toLowerCase()))) {
         return false;
       }
 
-      if (filters.tags.length && !filters.tags.some(t => postTags.includes(t))) {
+      if (filters.technologies.length && !filters.technologies.some(technology => postTechnologies.includes(technology.toLowerCase()))) {
         return false;
       }
 
-      if (filters.technologies.length && !filters.technologies.some(t => postTechnologies.includes(t))) {
+      if (filters.tags.length && !filters.tags.some(tag => postTags.includes(tag.toLowerCase()))) {
         return false;
       }
 
@@ -86,9 +86,9 @@ export default function BlogOverview({ posts, technologyEntries }: BlogOverviewP
       params.set("search", filters.search);
     }
 
-    filters.categories.forEach(c => params.append("category", c));
-    filters.tags.forEach(t => params.append("tag", t));
-    filters.technologies.forEach(t => params.append("technology", t));
+    filters.categories.forEach(category => params.append("category", category));
+    filters.technologies.forEach(technology => params.append("technology", technology));
+    filters.tags.forEach(tag => params.append("tag", tag));
 
     if (currentPage > 1) {
       params.set("page", currentPage.toString());

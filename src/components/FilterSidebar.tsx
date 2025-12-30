@@ -2,6 +2,8 @@ import type { CollectionEntry } from "astro:content";
 import { sortByFrequency } from "@/utils/sorting";
 import { formatDate } from "@/utils/formatting";
 
+import SearchIcon from "@/assets/icons/search.svg?react";
+
 export interface TechnologyEntry {
   id: string;
   name: string;
@@ -13,8 +15,8 @@ interface FilterSidebarProps {
   filters: {
     search: string;
     categories: string[];
-    tags: string[];
     technologies: string[];
+    tags: string[];
   };
   onChange: (filters: FilterSidebarProps["filters"]) => void;
   posts: CollectionEntry<"posts">[];
@@ -23,8 +25,8 @@ interface FilterSidebarProps {
 
 export default function FilterSidebar({ filters, onChange, posts, technologyEntries }: FilterSidebarProps) {
   const categories = Array.from(new Set(sortByFrequency(posts.flatMap(post => post.data.categories ?? []))));
-  const tags = Array.from(new Set(sortByFrequency(posts.flatMap(post => post.data.tags ?? []))));
   const technologies = Array.from(new Set(sortByFrequency(posts.flatMap(post => post.data.technologies ?? []))));
+  const tags = Array.from(new Set(sortByFrequency(posts.flatMap(post => post.data.tags ?? []))));
 
   const toggleFilter = (type: keyof typeof filters, value: string) => {
     const current = filters[type];
@@ -37,13 +39,14 @@ export default function FilterSidebar({ filters, onChange, posts, technologyEntr
       <div>
         <label className="text-sm font-bold mb-1 block">Search</label>
         <div className="relative">
-          {/* Replace with your React SVG import */}
-          <span className="pointer-events-none absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-muted">🔍</span>
+          <span className="pointer-events-none absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-muted">
+            <SearchIcon />
+          </span>
           <input
             type="search"
             value={filters.search}
             onChange={e => onChange({ ...filters, search: e.target.value })}
-            placeholder="Search posts…"
+            placeholder="Search posts..."
             className="w-full border border-border bg-bg pl-8 pr-2 py-1 text-sm outline-none"
           />
         </div>

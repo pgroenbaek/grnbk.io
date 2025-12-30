@@ -41,7 +41,7 @@ export default function BlogListItem({ post }: BlogListItemProps) {
                 {data.categories.map((category) => (
                   <span key={category} className="border border-border px-1.5 py-0.5">
                     <a
-                      href={`/blog?category=${encodeURIComponent(category)}`}
+                      href={`/blog?category=${encodeURIComponent(category).replace(/%20/g, "+")}`}
                       className="hover:underline"
                     >
                       {category}
