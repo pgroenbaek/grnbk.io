@@ -47,5 +47,4 @@ export default function BlogList({ posts }: Props) {
     return () => window.removeEventListener("popstate", applyFilters);
   }, []);
 
-  return null;
 }
