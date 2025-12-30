@@ -9,7 +9,6 @@ import Container from "@/components/Container.astro";
 import Technology from "@/components/Technology.astro";
 import Author from "@/components/Author.astro";
 import AuthorCard from "@/components/AuthorCard.astro";
-import Button from "@/components/Button.astro";
 import { formatDate } from "@/utils/formatting";
 
 import authorImage from "@/assets/authors/peter.webp";
@@ -52,7 +51,7 @@ const similarPosts = allPosts
   <DefaultLayout>
     <Container>
       <article class="max-w-3xl mx-auto flex flex-col gap-8">
-        <div class="w-fit">
+        <!--div class="w-fit mx-auto">
           <Button
             href="/blog"
             label="All Posts"
@@ -60,9 +59,21 @@ const similarPosts = allPosts
             <ArrowLeftIcon class="w-5 h-5" />
             <span class="">All Posts</span>
           </Button>
-        </div>
+        </div-->
 
         <header class="flex flex-col gap-4">
+          <a
+            href="/blog"
+            class="inline-flex items-center gap-1
+                  text-xs uppercase tracking-wide
+                  text-text-subtle
+                  hover:text-text
+                  hover:underline"
+          >
+            <ArrowLeftIcon class="w-3.5 h-3.5" />
+            All posts
+          </a>
+
           <h1 class="text-3xl font-bold leading-tight">
             {data.title}
           </h1>
@@ -120,6 +131,18 @@ const similarPosts = allPosts
           <Content />
         </div>
 
+        <a
+          href="/blog"
+          class="inline-flex items-center gap-1
+                text-xs uppercase tracking-wide
+                text-text-subtle
+                hover:text-text
+                hover:underline"
+        >
+          <ArrowLeftIcon class="w-3.5 h-3.5" />
+          All posts
+        </a>
+
         {(data.technologies || data.tags) && (
           <footer class="border-t border-border pt-4 flex flex-col gap-3 text-xs">
             {data.technologies && (
@@ -156,16 +179,6 @@ const similarPosts = allPosts
           bio="yadda yadda"
           image={authorImage}
         />
-
-        <div class="w-fit">
-          <Button
-            href="/blog"
-            label="All Posts"
-            >
-            <ArrowLeftIcon class="w-5 h-5" />
-            <span class="">All Posts</span>
-          </Button>
-        </div>
 
         {similarPosts.length > 0 && (
           <section class="border-t border-border pt-8 flex flex-col gap-4">
