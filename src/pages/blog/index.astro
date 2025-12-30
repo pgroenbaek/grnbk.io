@@ -1,10 +1,8 @@
 ---
+import BlogOverview from "@/components/BlogOverview";
 import Container from "@/components/Container.astro";
 import DefaultLayout from "@/layouts/DefaultLayout.astro";
 import Page from "@/layouts/Page.astro";
-import BlogSidebar from "@/components/BlogSidebar.astro";
-import BlogListItem from "@/components/BlogListItem.astro";
-import BlogList from "@/components/BlogList.tsx";
 import { sortByFrequency } from "@/utils/sorting";
 import { getCollection } from "astro:content";
 
@@ -23,76 +21,8 @@ const tags = sortByFrequency(posts.flatMap(p => p.data.tags ?? []));
     <Container>
       <div class="flex flex-col gap-6">
         <h1 class="text-3xl font-bold">Blog</h1>
-        <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_300px] gap-8">
-          <main class="flex flex-col gap-4">
-            {
-              allPosts.map((post) => (
-                <BlogListItem post={post} />
-              ))
-            }
-          </main>
-          <BlogSidebar
-            posts={allPosts}
-            categories={categories}
-            technologies={technologies}
-            tags={tags}
-          />
-        </div>
+        <BlogOverview posts={allPosts} client:only="react" />
       </div>
-      
-      <script>
-        const applyFilters = () => {
-          const params = new URLSearchParams(window.location.search);
-
-          const search = params.get("search")?.toLowerCase() ?? "";
-          const categories = params.getAll("category");
-          const tags = params.getAll("tag");
-          const technologies = params.getAll("technology");
-
-          document.querySelectorAll("[data-post]").forEach((el) => {
-            const title = el.dataset.title ?? "";
-            const description = el.dataset.description ?? "";
-            const postCategories = el.dataset.categories?.split(",") ?? [];
-            const postTags = el.dataset.tags?.split(",") ?? [];
-            const postTechnologies = el.dataset.technologies?.split(",") ?? [];
-
-            let visible = true;
-
-            if (search && !title.includes(search) && !description.includes(search)) {
-              visible = false;
-            }
-
-            if (
-              categories.length &&
-              !categories.some((c) => postCategories.includes(c))
-            ) {
-              visible = false;
-            }
-
-            if (tags.length && !tags.some((t) => postTags.includes(t))) {
-              visible = false;
-            }
-
-            if (
-              technologies.length &&
-              !technologies.some((t) => postTechnologies.includes(t))
-            ) {
-              visible = false;
-            }
-
-            const hasFilters =
-              search || categories.length || tags.length || technologies.length;
-
-            el.classList.toggle("is-visible", !hasFilters || visible);
-          });
-        };
-
-        // run once on load
-        applyFilters();
-
-        // react to browser navigation
-        window.addEventListener("popstate", applyFilters);
-      </script>
     </Container>
   </DefaultLayout>
 </Page>
