@@ -9,12 +9,12 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.3.8",
-    "@astrojs/react": "^4.4.0",
-    "@astrojs/rss": "^4.0.13",
+    "@astrojs/mdx": "^4.3.13",
+    "@astrojs/react": "^4.4.2",
+    "@astrojs/rss": "^4.0.14",
     "@astrojs/sitemap": "^3.6.0",
     "@tailwindcss/typography": "^0.5.19",
-    "astro": "^5.14.6",
+    "astro": "^5.16.6",
     "astro-color-scheme": "^1.1.5",
     "astro-seo": "^0.8.4",
     "react": "^19.2.0",
@@ -22,6 +22,7 @@
   },
   "devDependencies": {
     "@astrojs/tailwind": "^6.0.2",
+    "baseline-browser-mapping": "^2.9.11",
     "vite-plugin-svgr": "^4.5.0"
   }
 }
