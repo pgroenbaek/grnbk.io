@@ -1,4 +1,4 @@
-import BlogListItem from "./BlogListItem";
+import BlogListItem from "@/components/BlogListItem";
 import type { CollectionEntry } from "astro:content";
 
 interface BlogListProps {

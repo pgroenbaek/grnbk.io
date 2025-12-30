@@ -1,7 +1,7 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
 
-const posts = await getCollection('blog');
+const posts = await getCollection('posts');
 
 export const GET = ({ site }: { site?: string }) => {
   return rss({
@@ -12,7 +12,7 @@ export const GET = ({ site }: { site?: string }) => {
       title: post.data.title,
       pubDate: post.data.date,
       description: post.data.description,
-      link: `/blog/${post.slug}/`,
+      link: `/blog/${post.id}/`,
     }))
   });
 };

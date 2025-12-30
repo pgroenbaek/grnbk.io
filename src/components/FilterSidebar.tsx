@@ -1,4 +1,13 @@
 import type { CollectionEntry } from "astro:content";
+import { sortByFrequency } from "@/utils/sorting";
+import { formatDate } from "@/utils/formatting";
+
+export interface TechnologyEntry {
+  id: string;
+  name: string;
+  href?: string;
+  content: any;
+}
 
 interface FilterSidebarProps {
   filters: {
@@ -9,12 +18,13 @@ interface FilterSidebarProps {
   };
   onChange: (filters: FilterSidebarProps["filters"]) => void;
   posts: CollectionEntry<"posts">[];
+  technologyEntries: TechnologyEntry[];
 }
 
-export default function FilterSidebar({ filters, onChange, posts }: FilterSidebarProps) {
-  const categories = Array.from(new Set(posts.flatMap(p => p.data.categories ?? [])));
-  const tags = Array.from(new Set(posts.flatMap(p => p.data.tags ?? [])));
-  const technologies = Array.from(new Set(posts.flatMap(p => p.data.technologies ?? [])));
+export default function FilterSidebar({ filters, onChange, posts, technologyEntries }: FilterSidebarProps) {
+  const categories = Array.from(new Set(sortByFrequency(posts.flatMap(post => post.data.categories ?? []))));
+  const tags = Array.from(new Set(sortByFrequency(posts.flatMap(post => post.data.tags ?? []))));
+  const technologies = Array.from(new Set(sortByFrequency(posts.flatMap(post => post.data.technologies ?? []))));
 
   const toggleFilter = (type: keyof typeof filters, value: string) => {
     const current = filters[type];
@@ -23,46 +33,94 @@ export default function FilterSidebar({ filters, onChange, posts }: FilterSideba
   };
 
   return (
-    <aside className="flex flex-col gap-4 border p-4 rounded bg-gray-50">
+    <aside className="flex flex-col gap-8">
       <div>
-        <label className="block font-medium mb-1">Search:</label>
-        <input
-          type="text"
-          value={filters.search}
-          onChange={e => onChange({ ...filters, search: e.target.value })}
-          className="border p-2 rounded w-full"
-          placeholder="Search posts..."
-        />
+        <label className="text-sm font-bold mb-1 block">Search</label>
+        <div className="relative">
+          {/* Replace with your React SVG import */}
+          <span className="pointer-events-none absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-muted">🔍</span>
+          <input
+            type="search"
+            value={filters.search}
+            onChange={e => onChange({ ...filters, search: e.target.value })}
+            placeholder="Search posts…"
+            className="w-full border border-border bg-bg pl-8 pr-2 py-1 text-sm outline-none"
+          />
+        </div>
       </div>
 
       <div>
-        <h3 className="font-semibold mb-1">Categories</h3>
-        {categories.map(c => (
-          <label key={c} className="flex items-center gap-2">
-            <input type="checkbox" checked={filters.categories.includes(c)} onChange={() => toggleFilter("categories", c)} />
-            {c}
-          </label>
-        ))}
+        <label className="text-sm font-bold mb-2">Categories</label>
+        <div className="flex flex-wrap gap-2 text-xs">
+          {categories.map(category => (
+            <button
+              key={category}
+              type="button"
+              onClick={() => toggleFilter("categories", category)}
+              className={`border border-border px-1.5 py-0.5 filter-btn ${filters.categories.includes(category) ? "is-active" : ""}`}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div>
-        <h3 className="font-semibold mb-1">Tags</h3>
-        {tags.map(t => (
-          <label key={t} className="flex items-center gap-2">
-            <input type="checkbox" checked={filters.tags.includes(t)} onChange={() => toggleFilter("tags", t)} />
-            {t}
-          </label>
-        ))}
+        <label className="text-sm font-bold mb-2">Technologies</label>
+        <div className="flex flex-wrap gap-2 text-xs">
+          {technologies.map((techId) => {
+            const techEntry = technologyEntries.find(entry => entry.id === techId);
+            const TechnologyIcon = techEntry?.content;
+
+            return (
+              <button
+                key={techId}
+                type="button"
+                onClick={() => toggleFilter("technologies", techId)}
+                className={`border border-border px-1.5 py-0.5 filter-btn ${filters.technologies.includes(techId) ? "is-active" : ""}`}
+              >
+                {techEntry && (
+                  <span className="inline-flex items-center gap-1">
+                    {TechnologyIcon ? <TechnologyIcon /> : null}
+                    <span>{techEntry.name}</span>
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       <div>
-        <h3 className="font-semibold mb-1">Technologies</h3>
-        {technologies.map(t => (
-          <label key={t} className="flex items-center gap-2">
-            <input type="checkbox" checked={filters.technologies.includes(t)} onChange={() => toggleFilter("technologies", t)} />
-            {t}
-          </label>
-        ))}
+        <label className="text-sm font-bold mb-2">Tags</label>
+        <div className="flex flex-wrap gap-2 text-xs">
+          {tags.map(tag => (
+            <button
+              key={tag}
+              type="button"
+              onClick={() => toggleFilter("tags", tag)}
+              className={`border border-border px-1.5 py-0.5 filter-btn ${filters.tags.includes(tag) ? "is-active" : ""}`}
+            >
+              #{tag}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <label className="text-sm font-bold mb-2">Recent Posts</label>
+        <ul className="flex flex-col gap-2">
+          {posts.slice(0, 5).map(post => (
+            <li key={post.id}>
+              <a href={`/blog/${post.id}`} className="text-sm hover:underline">
+                {post.data.title}
+              </a>
+              <div className="text-xs text-text-subtle">
+                {formatDate(post.data.date)}
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </aside>
   );

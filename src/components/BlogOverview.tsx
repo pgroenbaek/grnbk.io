@@ -1,15 +1,17 @@
 import { useState, useMemo, useEffect } from "react";
 import type { CollectionEntry } from "astro:content";
-import BlogList from "./BlogList";
-import FilterSidebar from "./FilterSidebar";
+import BlogList from "@/components/BlogList";
+import FilterSidebar from "@/components/FilterSidebar";
+import type { TechnologyEntry } from "@/components/FilterSidebar";
 
 interface BlogOverviewProps {
   posts: CollectionEntry<"posts">[];
+  technologyEntries: TechnologyEntry[];
 }
 
 const POSTS_PER_PAGE = 3;
 
-export default function BlogOverview({ posts }: BlogOverviewProps) {
+export default function BlogOverview({ posts, technologyEntries }: BlogOverviewProps) {
 
   const [filters, setFilters] = useState(() => {
     if (typeof window === "undefined") {
@@ -43,7 +45,7 @@ export default function BlogOverview({ posts }: BlogOverviewProps) {
   const filteredPosts = useMemo(() => {
     return posts.filter(post => {
       const title = post.data.title.toLowerCase();
-      const description = post.data.description.toLowerCase();
+      const description = post.data.description?.toLowerCase() ?? "";
 
       const postCategories = post.data.categories?.map(c => c.toLowerCase()) ?? [];
       const postTags = post.data.tags?.map(t => t.toLowerCase()) ?? [];
@@ -92,7 +94,10 @@ export default function BlogOverview({ posts }: BlogOverviewProps) {
       params.set("page", currentPage.toString());
     }
 
-    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    const paramsString = params.toString();
+    const newUrl = paramsString
+      ? `${window.location.pathname}?${paramsString}`
+      : window.location.pathname;
 
     window.history.replaceState(null, "", newUrl);
   }, [filters, currentPage]);
@@ -123,7 +128,7 @@ export default function BlogOverview({ posts }: BlogOverviewProps) {
         )}
       </div>
 
-      <FilterSidebar posts={posts} filters={filters} onChange={setFilters} />
+      <FilterSidebar posts={posts} filters={filters} onChange={setFilters} technologyEntries={technologyEntries} />
     </div>
   );
 }

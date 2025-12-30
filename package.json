@@ -13,12 +13,15 @@
     "@astrojs/react": "^4.4.2",
     "@astrojs/rss": "^4.0.14",
     "@astrojs/sitemap": "^3.6.0",
+    "@mdx-js/loader": "^3.1.1",
+    "@mdx-js/react": "^3.1.1",
     "@tailwindcss/typography": "^0.5.19",
     "astro": "^5.16.6",
     "astro-color-scheme": "^1.1.5",
     "astro-seo": "^0.8.4",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "xdm": "^3.4.0"
   },
   "devDependencies": {
     "@astrojs/tailwind": "^6.0.2",
