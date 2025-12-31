@@ -1,6 +1,8 @@
 ---
 import { getEntry } from "astro:content";
 
+import { astroTechnologyIcons } from "@/utils/icons";
+
 interface Props {
   id: string;
   hrefOverride?: string;
@@ -16,23 +18,11 @@ if (!technology) {
 }
 
 const { name, href, icon } = technology.data;
-
-const svgModules = import.meta.glob(
-  '/src/assets/technologies/*.svg',
-  { eager: true, query: '?raw', import: 'default' }
-);
-
-const svgMap: Record<string, string> = {};
-for (const path in svgModules) {
-  const name = path.split('/').pop();
-  svgMap[name] = svgModules[path] as string;
-}
-
-const svgContent = svgMap[icon];
+const svgContent = astroTechnologyIcons[icon];
 
 if (!svgContent) {
   throw new Error(
-    `SVG "${icon}" not found. Available: ${Object.keys(svgMap).join(', ')}`
+    `SVG "${icon}" not found. Available: ${Object.keys(astroTechnologyIcons).join(', ')}`
   );
 }
 

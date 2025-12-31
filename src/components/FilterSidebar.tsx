@@ -1,22 +1,10 @@
 import type { CollectionEntry } from "astro:content";
-import type { FC, SVGProps } from "react";
 
-import { sortByFrequency } from "@/utils/sorting";
 import { formatDate } from "@/utils/formatting";
+import { sortByFrequency } from "@/utils/sorting";
+import { reactTechnologyIcons } from "@/utils/icons";
 
 import SearchIcon from "@/assets/icons/search.svg?react";
-
-const icons = import.meta.glob(
-  "/src/assets/technologies/*.svg",
-  { eager: true, query: '?react', import: 'default' }
-);
-
-const technologyIcons: Record<string, FC<SVGProps<SVGSVGElement>>> = Object.fromEntries(
-  Object.entries(icons).map(([path, mod]) => [
-    path.split("/").pop()!,
-    mod as FC<SVGProps<SVGSVGElement>>,
-  ])
-);
 
 interface FilterSidebarProps {
   filters: {
@@ -80,7 +68,7 @@ export default function FilterSidebar({ filters, onChange, posts, technologies }
         <div className="flex flex-wrap gap-2 text-xs">
           {technologiesUsed.map((technology) => {
             const technologyEntry = technologies.find(entry => entry.id === technology);
-            const TechnologyIcon = technologyEntry && technologyIcons[technologyEntry.data.icon];
+            const TechnologyIcon = technologyEntry && reactTechnologyIcons[technologyEntry.data.icon];
 
             return (
               <button
