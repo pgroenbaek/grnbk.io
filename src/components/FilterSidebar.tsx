@@ -8,7 +8,7 @@ export interface TechnologyEntry {
   id: string;
   name: string;
   href?: string;
-  content: any;
+  content: React.ComponentType;
 }
 
 interface FilterSidebarProps {

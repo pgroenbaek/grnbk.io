@@ -1,12 +1,10 @@
 ---
-import { MDXContent } from '@mdx-js/react';
-import { compileSync } from 'xdm';
-import * as React from "react";
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import BlogOverview from "@/components/BlogOverview";
 import Container from "@/components/Container.astro";
 import DefaultLayout from "@/layouts/DefaultLayout.astro";
 import Page from "@/layouts/Page.astro";
+import Technology from "@/components/Technology.astro";
 import { TechnologyEntry } from "@/components/FilterSidebar";
 
 const posts = await getCollection("posts", ({ data }) => !data.draft);
@@ -15,19 +13,16 @@ const allPosts = posts.sort(
 );
 
 const technologies = await getCollection("technologies");
-const technologyEntries: TechnologyEntry[] = await Promise.all(
-  technologies.map(async (technology) => {
-    //const compiled = compileSync(technology.body, { jsx: true, format: 'mdx' });
-    //const Content = new Function('React', `${compiled.value}; return MDXContent`)(React);
+const technologyEntries: TechnologyEntry[] = [];
 
-    return {
-      id: technology.id,
-      name: technology.data.name,
-      href: technology.data.href,
-      content: ""/*Content*/,
-    };
-  })
-);
+/*for (const tech of technologies) {
+  technologyEntries.push({
+    id: tech.id,
+    name: tech.data.name,
+    href: tech.data.href,
+    content: <Technology id={tech.id} showLinks={false} />,
+  });
+}*/
 ---
 
 <Page title="Blog" description="Blog">
@@ -35,7 +30,11 @@ const technologyEntries: TechnologyEntry[] = await Promise.all(
     <Container>
       <div class="flex flex-col gap-6">
         <h1 class="text-3xl font-bold">Blog</h1>
-        <BlogOverview posts={allPosts} technologyEntries={technologyEntries} client:only="react" />
+        <BlogOverview
+          client:only="react"
+          posts={allPosts}
+          technologyEntries={technologyEntries}
+        />
       </div>
     </Container>
   </DefaultLayout>
