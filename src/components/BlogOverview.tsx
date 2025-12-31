@@ -1,34 +1,34 @@
-import { useState, useMemo, useEffect } from "react";
 import type { CollectionEntry } from "astro:content";
+import { useState, useMemo, useEffect } from "react";
+
 import BlogList from "@/components/BlogList";
 import FilterSidebar from "@/components/FilterSidebar";
-import type { TechnologyEntry } from "@/components/FilterSidebar";
 
 interface BlogOverviewProps {
   posts: CollectionEntry<"posts">[];
-  technologyEntries: TechnologyEntry[];
+  technologies: CollectionEntry<"technologies">[];
 }
 
 const POSTS_PER_PAGE = 3;
 
-export default function BlogOverview({ posts, technologyEntries }: BlogOverviewProps) {
+export default function BlogOverview({ posts, technologies }: BlogOverviewProps) {
 
   const [filters, setFilters] = useState(() => {
     if (typeof window === "undefined") {
-      return { search: "", categories: [], tags: [], technologies: [] };
+      return { searchParam: "", categoryParams: [], tagParams: [], technologyParams: [] };
     }
 
     const params = new URLSearchParams(window.location.search);
-    const search = (params.get("search") || "").toLowerCase();
-    const categories = params.getAll("category").map(c => c.toLowerCase());
-    const tags = params.getAll("tag").map(t => t.toLowerCase());
-    const technologies = params.getAll("technology").map(t => t.toLowerCase());
+    const searchParam = (params.get("search") || "").toLowerCase();
+    const categoryParams = params.getAll("category").map(c => c.toLowerCase());
+    const tagParams = params.getAll("tag").map(t => t.toLowerCase());
+    const technologyParams = params.getAll("technology").map(t => t.toLowerCase());
 
     return {
-        search,
-        categories,
-        tags,
-        technologies,
+        searchParam,
+        categoryParams,
+        technologyParams,
+        tagParams,
     };
   });
 
@@ -51,19 +51,38 @@ export default function BlogOverview({ posts, technologyEntries }: BlogOverviewP
       const postTags = post.data.tags?.map(t => t.toLowerCase()) ?? [];
       const postTechnologies = post.data.technologies?.map(t => t.toLowerCase()) ?? [];
 
-      if (filters.search && !title.includes(filters.search.toLowerCase()) && !description.includes(filters.search.toLowerCase())) {
+      const matchesSearch = (search?: string) => {
+        if (!search) {
+          return true;
+        }
+
+        const q = search.toLowerCase();
+        return title.includes(q) || description.includes(q);
+      };
+
+      const matchesAny = (filters: string[], values: string[]) => {
+        if (!filters.length) {
+          return true;
+        }
+
+        return filters.some(filter =>
+          values.includes(filter.toLowerCase())
+        );
+      };
+
+      if (!matchesSearch(filters.searchParam)) {
         return false;
       }
 
-      if (filters.categories.length && !filters.categories.some(category => postCategories.includes(category.toLowerCase()))) {
+      if (!matchesAny(filters.categoryParams, postCategories)) {
         return false;
       }
 
-      if (filters.technologies.length && !filters.technologies.some(technology => postTechnologies.includes(technology.toLowerCase()))) {
+      if (!matchesAny(filters.technologyParams, postTechnologies)) {
         return false;
       }
 
-      if (filters.tags.length && !filters.tags.some(tag => postTags.includes(tag.toLowerCase()))) {
+      if (!matchesAny(filters.tagParams, postTags)) {
         return false;
       }
 
@@ -82,13 +101,13 @@ export default function BlogOverview({ posts, technologyEntries }: BlogOverviewP
   useEffect(() => {
     const params = new URLSearchParams();
 
-    if (filters.search) {
-      params.set("search", filters.search);
+    if (filters.searchParam) {
+      params.set("search", filters.searchParam);
     }
 
-    filters.categories.forEach(category => params.append("category", category));
-    filters.technologies.forEach(technology => params.append("technology", technology));
-    filters.tags.forEach(tag => params.append("tag", tag));
+    filters.categoryParams.forEach(category => params.append("category", category));
+    filters.technologyParams.forEach(technology => params.append("technology", technology));
+    filters.tagParams.forEach(tag => params.append("tag", tag));
 
     if (currentPage > 1) {
       params.set("page", currentPage.toString());
@@ -128,7 +147,7 @@ export default function BlogOverview({ posts, technologyEntries }: BlogOverviewP
         )}
       </div>
 
-      <FilterSidebar posts={posts} filters={filters} onChange={setFilters} technologyEntries={technologyEntries} />
+      <FilterSidebar posts={posts} technologies={technologies} filters={filters} onChange={setFilters} />
     </div>
   );
 }

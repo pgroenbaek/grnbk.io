@@ -1,32 +1,39 @@
 import type { CollectionEntry } from "astro:content";
+import type { FC, SVGProps } from "react";
+
 import { sortByFrequency } from "@/utils/sorting";
 import { formatDate } from "@/utils/formatting";
 
 import SearchIcon from "@/assets/icons/search.svg?react";
 
-export interface TechnologyEntry {
-  id: string;
-  name: string;
-  href?: string;
-  content: React.ComponentType;
-}
+const icons = import.meta.glob(
+  "/src/assets/technologies/*.svg",
+  { eager: true, query: '?react', import: 'default' }
+);
+
+const technologyIcons: Record<string, FC<SVGProps<SVGSVGElement>>> = Object.fromEntries(
+  Object.entries(icons).map(([path, mod]) => [
+    path.split("/").pop()!,
+    mod as FC<SVGProps<SVGSVGElement>>,
+  ])
+);
 
 interface FilterSidebarProps {
   filters: {
-    search: string;
-    categories: string[];
-    technologies: string[];
-    tags: string[];
+    searchParam: string;
+    categoryParams: string[];
+    technologyParams: string[];
+    tagParams: string[];
   };
   onChange: (filters: FilterSidebarProps["filters"]) => void;
   posts: CollectionEntry<"posts">[];
-  technologyEntries: TechnologyEntry[];
+  technologies: CollectionEntry<"technologies">[];
 }
 
-export default function FilterSidebar({ filters, onChange, posts, technologyEntries }: FilterSidebarProps) {
-  const categories = Array.from(new Set(sortByFrequency(posts.flatMap(post => post.data.categories ?? []))));
-  const technologies = Array.from(new Set(sortByFrequency(posts.flatMap(post => post.data.technologies ?? []))));
-  const tags = Array.from(new Set(sortByFrequency(posts.flatMap(post => post.data.tags ?? []))));
+export default function FilterSidebar({ filters, onChange, posts, technologies }: FilterSidebarProps) {
+  const categoriesUsed = Array.from(new Set(sortByFrequency(posts.flatMap(post => post.data.categories ?? []))));
+  const technologiesUsed = Array.from(new Set(sortByFrequency(posts.flatMap(post => post.data.technologies ?? []))));
+  const tagsUsed = Array.from(new Set(sortByFrequency(posts.flatMap(post => post.data.tags ?? []))));
 
   const toggleFilter = (type: keyof typeof filters, value: string) => {
     const current = filters[type];
@@ -44,8 +51,8 @@ export default function FilterSidebar({ filters, onChange, posts, technologyEntr
           </span>
           <input
             type="search"
-            value={filters.search}
-            onChange={e => onChange({ ...filters, search: e.target.value })}
+            value={filters.searchParam}
+            onChange={e => onChange({ ...filters, searchParam: e.target.value })}
             placeholder="Search posts..."
             className="w-full border border-border bg-bg pl-8 pr-2 py-1 text-sm outline-none"
           />
@@ -55,12 +62,12 @@ export default function FilterSidebar({ filters, onChange, posts, technologyEntr
       <div>
         <label className="text-sm font-bold mb-2">Categories</label>
         <div className="flex flex-wrap gap-2 text-xs">
-          {categories.map(category => (
+          {categoriesUsed.map(category => (
             <button
               key={category}
               type="button"
-              onClick={() => toggleFilter("categories", category)}
-              className={`border border-border px-1.5 py-0.5 filter-btn ${filters.categories.includes(category) ? "is-active" : ""}`}
+              onClick={() => toggleFilter("categoryParams", category)}
+              className={`border border-border px-1.5 py-0.5 filter-btn ${filters.categoryParams.includes(category) ? "is-active" : ""}`}
             >
               {category}
             </button>
@@ -71,21 +78,23 @@ export default function FilterSidebar({ filters, onChange, posts, technologyEntr
       <div>
         <label className="text-sm font-bold mb-2">Technologies</label>
         <div className="flex flex-wrap gap-2 text-xs">
-          {technologies.map((techId) => {
-            const techEntry = technologyEntries.find(entry => entry.id === techId);
-            const TechnologyIcon = techEntry?.content;
+          {technologiesUsed.map((technology) => {
+            const technologyEntry = technologies.find(entry => entry.id === technology);
+            const TechnologyIcon = technologyEntry && technologyIcons[technologyEntry.data.icon];
 
             return (
               <button
-                key={techId}
+                key={technology}
                 type="button"
-                onClick={() => toggleFilter("technologies", techId)}
-                className={`border border-border px-1.5 py-0.5 filter-btn ${filters.technologies.includes(techId) ? "is-active" : ""}`}
+                onClick={() => toggleFilter("technologyParams", technology)}
+                className={`border border-border px-1.5 py-0.5 filter-btn ${filters.technologyParams.includes(technology) ? "is-active" : ""}`}
               >
-                {techEntry && (
+                {technologyEntry && (
                   <span className="inline-flex items-center gap-1">
-                    {TechnologyIcon ? <TechnologyIcon /> : null}
-                    <span>{techEntry.name}</span>
+                    {TechnologyIcon && (
+                      <TechnologyIcon className="size-3" />
+                    )}
+                    <span>{technologyEntry.data.name}</span>
                   </span>
                 )}
               </button>
@@ -97,12 +106,12 @@ export default function FilterSidebar({ filters, onChange, posts, technologyEntr
       <div>
         <label className="text-sm font-bold mb-2">Tags</label>
         <div className="flex flex-wrap gap-2 text-xs">
-          {tags.map(tag => (
+          {tagsUsed.map(tag => (
             <button
               key={tag}
               type="button"
-              onClick={() => toggleFilter("tags", tag)}
-              className={`border border-border px-1.5 py-0.5 filter-btn ${filters.tags.includes(tag) ? "is-active" : ""}`}
+              onClick={() => toggleFilter("tagParams", tag)}
+              className={`border border-border px-1.5 py-0.5 filter-btn ${filters.tagParams.includes(tag) ? "is-active" : ""}`}
             >
               #{tag}
             </button>
