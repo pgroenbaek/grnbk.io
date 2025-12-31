@@ -35,6 +35,8 @@ const projectsWebsites = projects
   .filter((project) => project.data.type === "website")
   .filter((project) => excludeFeatured(project))
   .sort((a, b) => b.id.localeCompare(a.id));
+
+const testimonials = await getCollection("testimonials", ({ data }) => !data.draft);
 ---
 
 <Page title="Index" description="Index">
@@ -46,7 +48,11 @@ const projectsWebsites = projects
           <Projects id="work" title="Work" projects={projectsWork} showLinks={false} />
         )
       }
-      <Testimonials />
+      {
+        testimonials.length > 0 && (
+          <Testimonials id="testimonials" title="Testimonials" testimonials={testimonials} showLinks={false} />
+        )
+      }
       {
         projectsOss.length > 0 && (
           <Projects id="oss-projects" title="Open Source Projects" projects={projectsOss} showLinks={false} />

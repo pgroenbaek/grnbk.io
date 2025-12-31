@@ -1,0 +1,56 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import { render } from "astro:content";
+import { components } from "@/components/mdx";
+
+interface Props {
+  testimonial: CollectionEntry<"testimonials">;
+  loading?: "eager" | "lazy";
+  showLinks?: boolean;
+}
+
+import LinkExternalIcon from "@/assets/icons/link-external.svg";
+
+const { testimonial, loading = "lazy", showLinks = true } = Astro.props;
+const { data } = testimonial;
+const { Content } = await render(testimonial);
+---
+
+<div class="rounded-none bg-bg-subtle border border-border p-2 flex flex-col group">
+  <div class="px-1 pt-2 flex flex-col gap-4 flex-1 border-l-4 text-subtle pl-4">
+    <div class="text-lg italic relative [&_code]:font-[monospace] [&_code]:bg-bg [&_code]:text-text [&_code]:px-0.5">
+      <span class="absolute -left-4 -top-2 text-4xl text-subtle leading-none select-none">
+        “
+      </span>
+      <Content components={components} showLinks={showLinks} />
+    </div>
+    <div class="flex gap-2 items-center mt-auto">
+      <Image
+        src={data.image}
+        alt=""
+        class="size-12 rounded-full bg-bg-subtle border border-border shrink-0"
+        width={80}
+      />
+      <div class="leading-5">
+        <div class="mb-1">
+          {
+            data.href && showLinks ? (
+              <a
+                href={data.href}
+                class="text-accent-subtle underline font-bold text-md flex items-center"
+                target="_blank"
+              >
+                {data.title}
+                <LinkExternalIcon class="size-3 ml-1" />
+              </a>
+            ) : (
+              <div class="text-text font-bold text-md">{data.title}</div>
+            )
+          }
+        </div>
+        <p class="text-sm">{data.subtitle}</p>
+      </div>
+    </div>
+  </div>
+</div>

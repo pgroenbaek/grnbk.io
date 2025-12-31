@@ -1,0 +1,17 @@
+---
+import Section from "@/components/Section";
+import TestimonialCard from "@/components/TestimonialCard.astro";
+
+const { id, title, testimonials, showLinks = true } = Astro.props;
+---
+
+<Section {id}>
+  <Section.Title {id}>{title}</Section.Title>
+  <div class="grid grid-cols-1 md:grid-cols-2 mt-4 gap-6">
+    {
+      testimonials.map((testimonial: any, i: number) => (
+        <TestimonialCard {testimonial} loading={i <= 1 ? "eager" : "lazy"} showLinks={showLinks} />
+      ))
+    }
+  </div>
+</Section>
