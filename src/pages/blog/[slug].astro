@@ -1,5 +1,4 @@
 ---
-import { Image } from "astro:assets";
 import { render, getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 
@@ -93,13 +92,15 @@ const similarPosts = allPosts
           </div>
 
           <div class="border border-border overflow-hidden">
-            <!--Image
+            <img
               src={data.image.src}
               alt={data.image.alt}
               width={1200}
               height={675}
               class="w-full object-cover"
-            /-->
+              loading="eager"
+              decoding="sync"
+            />
           </div>
         </header>
 

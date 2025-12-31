@@ -1,5 +1,4 @@
 ---
-import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { render } from "astro:content";
 import { components } from "@/components/mdx";
@@ -26,11 +25,13 @@ const { Content } = await render(testimonial);
       <Content components={components} showLinks={showLinks} />
     </div>
     <div class="flex gap-2 items-center mt-auto">
-      <Image
+      <img
         src={data.image}
         alt=""
         class="size-12 rounded-full bg-bg-subtle border border-border shrink-0"
         width={80}
+        loading="lazy"
+        decoding="async"
       />
       <div class="leading-5">
         <div class="mb-1">
