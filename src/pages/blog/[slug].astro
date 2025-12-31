@@ -140,7 +140,7 @@ const similarPosts = allPosts
                 <span class="font-bold">Technologies:</span>
                 {data.technologies.map((technology) => (
                   <div class="py-0.5">
-                    <!--Technology id={technology} hrefOverride={`/blog?technology=${encodeURIComponent(technology).replace(/%20/g, "+")}`} boldText={false}/-->
+                    <Technology id={technology} hrefOverride={`/blog?technology=${encodeURIComponent(technology).replace(/%20/g, "+")}`} boldText={false}/>
                   </div>
                 ))}
               </div>
