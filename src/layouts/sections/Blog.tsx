@@ -3,6 +3,7 @@ import { useState, useMemo, useEffect } from "react";
 
 import BlogListItem from "@/components/BlogListItem";
 import BlogListFilter from "@/components/BlogListFilter";
+import Pagination from "@/components/Pagination";
 
 interface BlogProps {
   posts: CollectionEntry<"posts">[];
@@ -134,25 +135,11 @@ export default function Blog({ posts, technologies }: BlogProps) {
           <p className="text-gray-500">No posts found.</p>
         )}
 
-        {totalPages > 1 && (
-          <div className="flex justify-center items-center gap-4 mt-4">
-            <button
-              className="px-3 py-1 border rounded disabled:opacity-50"
-              disabled={currentPage === 1}
-              onClick={() => setCurrentPage(p => p - 1)}
-            >
-              Prev
-            </button>
-            <span className="text-sm">Page {currentPage} of {totalPages}</span>
-            <button
-              className="px-3 py-1 border rounded disabled:opacity-50"
-              disabled={currentPage === totalPages}
-              onClick={() => setCurrentPage(p => p + 1)}
-            >
-              Next
-            </button>
-          </div>
-        )}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+        />
       </div>
 
       <BlogListFilter posts={posts} technologies={technologies} filters={filters} onChange={setFilters} />
