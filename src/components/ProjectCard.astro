@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { render } from "astro:content";
+
 import { components } from "@/components/mdx";
 
 interface Props {
@@ -28,13 +29,11 @@ const { Content } = await render(project);
           <img
             src={data.image.src}
             alt={data.image.alt}
-            quality="max"
             width={800}
             height={400}
             {loading}
             decoding={loading === "eager" ? "sync" : "async"}
             fetchpriority={loading === "eager" ? "high" : undefined}
-            layout="constrained"
             class="object-cover object-center size-full group-hover:scale-[1.025] transition-transform will-change-transform duration-500 ease-out"
           />
         </a>
@@ -42,13 +41,11 @@ const { Content } = await render(project);
         <img
             src={data.image.src}
             alt={data.image.alt}
-            quality="max"
             width={800}
             height={400}
             {loading}
             decoding={loading === "eager" ? "sync" : "async"}
             fetchpriority={loading === "eager" ? "high" : undefined}
-            layout="constrained"
             class="object-cover object-center size-full group-hover:scale-[1.025] transition-transform will-change-transform duration-500 ease-out"
           />
       )

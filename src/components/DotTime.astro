@@ -1,19 +1,31 @@
 ---
-
+const timezone = "Europe/Copenhagen";
+const timezoneLabel = "CET";
+const timezoneDstLabel = "CEST";
+const standardTimeMatch = "Central European Standard Time";
 ---
+
 <span class="bg-surface rounded-none border border-border px-1.5 tabular-nums select-none text-text inline-flex gap-1 items-center">
   <span class="size-2 inline-block rounded-full bg-red-500"></span>
   <span id="dot-time">00:00:00</span>
 </span>
-<span id="dot-timezone">CET</span>
+<span id="dot-timezone">{timezoneLabel}</span>
 
-<script is:inline>
+<script
+  is:inline
+  define:vars={{
+    timezone,
+    timezoneLabel,
+    timezoneDstLabel,
+    standardTimeMatch
+  }}
+>
   (() => {
     const config = {
-      timezone: "Europe/Copenhagen",
-      timezoneLabel: "CET",
-      timezoneDstLabel: "CEST",
-      standardTimeMatch: "Central European Standard Time"
+      timezone,
+      timezoneLabel,
+      timezoneDstLabel,
+      standardTimeMatch
     };
 
     const getCETLabel = (date) => {

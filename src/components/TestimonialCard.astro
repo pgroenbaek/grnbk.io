@@ -30,8 +30,9 @@ const { Content } = await render(testimonial);
         alt=""
         class="size-12 rounded-full bg-bg-subtle border border-border shrink-0"
         width={80}
-        loading="lazy"
-        decoding="async"
+        {loading}
+        decoding={loading === "eager" ? "sync" : "async"}
+        fetchpriority={loading === "eager" ? "high" : undefined}
       />
       <div class="leading-5">
         <div class="mb-1">

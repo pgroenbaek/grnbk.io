@@ -6,11 +6,7 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-export default function Pagination({
-  currentPage,
-  totalPages,
-  onPageChange,
-}: PaginationProps) {
+export default function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
   useEffect(() => {
     if (currentPage > totalPages && totalPages > 0) {
       onPageChange(totalPages);

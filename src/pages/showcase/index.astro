@@ -1,11 +1,12 @@
 ---
+import { getCollection } from "astro:content";
+
 import Container from '@/components/Container.astro';
 import Hero from '@/layouts/sections/Hero.astro';
 import Projects from '@/layouts/sections/Projects.astro';
 import Testimonials from '@/layouts/sections/Testimonials.astro';
 import ShowcaseLayout from '@/layouts/ShowcaseLayout.astro';
 import Page from '@/layouts/Page.astro';
-import { getCollection } from "astro:content";
 
 const projects = await getCollection("projects", ({ data }) => !data.draft);
 

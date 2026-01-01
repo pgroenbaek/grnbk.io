@@ -17,3 +17,14 @@
 .filter-btn:hover, .filter-btn:hover span, .filter-btn:hover span span {
   text-decoration: underline;
 }
+
+/*a {
+  @apply font-medium underline underline-offset-2 transition-colors;
+  text-decoration-thickness: 1px;
+  color: #60FA94;
+}
+
+a:hover {
+  color: #7BFFAE;
+  text-decoration-thickness: 2px;
+}*/

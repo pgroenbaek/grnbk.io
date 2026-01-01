@@ -1,10 +1,12 @@
 ---
+import { Image } from "astro:assets";
+
 import Section from "@/components/Section";
 import SocialLinks from "@/layouts/partials/SocialLinks.astro";
 import DotTime from "@/components/DotTime.astro";
 import ProjectCard from "@/components/ProjectCard.astro";
+
 import profileImage from "@/assets/authors/peter.webp";
-import { Image } from "astro:assets";
 
 const { project, showLinks = true } = Astro.props;
 ---

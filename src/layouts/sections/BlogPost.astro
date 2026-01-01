@@ -7,6 +7,7 @@ interface Props {
   similarPosts: CollectionEntry<"posts">[];
 }
 
+import Section from "@/components/Section";
 import Technology from "@/components/Technology.astro";
 import Author from "@/components/Author.astro";
 import AuthorCard from "@/components/AuthorCard.astro";
@@ -14,7 +15,6 @@ import { formatDate } from "@/utils/formatting";
 
 import authorImage from "@/assets/authors/peter.webp";
 import ArrowLeftIcon from "@/assets/icons/arrow-left.svg";
-import Section from "@/components/Section";
 
 const { post } = Astro.props;
 const { data } = post;

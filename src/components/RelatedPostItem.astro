@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+
 import { formatDate } from "@/utils/formatting";
 
 import ArrowRightIcon from "@/assets/icons/arrow-right.svg";
@@ -11,6 +12,7 @@ interface Props {
 const { post } = Astro.props;
 const data = post.data;
 ---
+
 <article class="blog-post rounded-none bg-bg-subtle border border-border p-2 flex gap-4 group">
   {data.image && (
     <a

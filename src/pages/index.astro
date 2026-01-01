@@ -1,4 +1,6 @@
 ---
+import { getCollection } from "astro:content";
+
 import Container from '@/components/Container.astro';
 import Hero from '@/layouts/sections/Hero.astro';
 import Projects from '@/layouts/sections/Projects.astro';
@@ -6,7 +8,6 @@ import Testimonials from '@/layouts/sections/Testimonials.astro';
 import Contact from '@/layouts/sections/Contact.astro';
 import DefaultLayout from '@/layouts/DefaultLayout.astro';
 import Page from '@/layouts/Page.astro';
-import { getCollection } from "astro:content";
 
 const projects = await getCollection("projects", ({ data }) => !data.draft);
 
@@ -37,7 +38,8 @@ const projectsWebsites = projects
   .filter((project) => excludeFeatured(project))
   .sort((a, b) => b.id.localeCompare(a.id));
 
-const testimonials = await getCollection("testimonials", ({ data }) => !data.draft);
+const testimonials = (await getCollection("testimonials", ({ data }) => !data.draft))
+  .sort((a, b) => b.id.localeCompare(a.id));
 ---
 
 <Page title="Index" description="Index">
