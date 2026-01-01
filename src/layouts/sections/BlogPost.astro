@@ -1,0 +1,169 @@
+---
+import { render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  post: CollectionEntry<"posts">;
+  similarPosts: CollectionEntry<"posts">[];
+}
+
+import Technology from "@/components/Technology.astro";
+import Author from "@/components/Author.astro";
+import AuthorCard from "@/components/AuthorCard.astro";
+import { formatDate } from "@/utils/formatting";
+
+import authorImage from "@/assets/authors/peter.webp";
+import ArrowLeftIcon from "@/assets/icons/arrow-left.svg";
+
+const { post, similarPosts } = Astro.props;
+const { data } = post;
+const { Content } = await render(post);
+---
+
+<article class="max-w-3xl mx-auto flex flex-col gap-8">
+  <header class="flex flex-col gap-4">
+    <a
+      href="/blog"
+      class="inline-flex items-center gap-1
+            text-xs uppercase tracking-wide
+            text-text-subtle
+            hover:text-text
+            hover:underline"
+    >
+      <ArrowLeftIcon class="w-3.5 h-3.5" />
+      All posts
+    </a>
+
+    <h1 class="text-3xl font-bold leading-tight">
+      {data.title}
+    </h1>
+
+    <Author
+      name="Peter Grønbæk Andersen"
+      image={authorImage}
+    />
+
+    <div class="flex flex-wrap items-center gap-3 text-xs text-text-subtle">
+      <time>{formatDate(data.date)}</time>
+
+      {data.categories && (
+        <div class="flex gap-2">
+          {data.categories.map((category) => (
+            <span class="border border-border px-1.5 py-0.5">
+              <a
+                href={`/blog?category=${encodeURIComponent(category).replace(/%20/g, "+")}`}
+                class="hover:underline"
+              >
+                {category}
+              </a>
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <div class="border border-border overflow-hidden">
+      <img
+        src={data.image.src}
+        alt={data.image.alt}
+        width={1200}
+        height={675}
+        class="w-full object-cover"
+        loading="eager"
+        decoding="sync"
+      />
+    </div>
+  </header>
+
+  <div
+    class="prose prose-sm max-w-none
+            prose-headings:font-bold
+            prose-headings:text-text
+            prose-p:text-text
+            prose-ol:text-text
+            prose-ul:text-text
+            prose-a:text-accent
+            prose-a:underline
+            prose-code:bg-bg-subtle
+            prose-code:px-1
+            prose-code:py-0.5
+            prose-code:border
+            prose-code:border-border"
+  >
+    <Content />
+  </div>
+
+  <a
+    href="/blog"
+    class="inline-flex items-center gap-1
+          text-xs uppercase tracking-wide
+          text-text-subtle
+          hover:text-text
+          hover:underline"
+  >
+    <ArrowLeftIcon class="w-3.5 h-3.5" />
+    All posts
+  </a>
+
+  {(data.technologies || data.tags) && (
+    <footer class="border-t border-border pt-4 flex flex-col gap-3 text-xs">
+      {data.technologies && data.technologies.length > 0 && (
+        <div class="flex flex-wrap gap-2">
+          <span class="font-bold">Technologies:</span>
+          {data.technologies.map((technology) => (
+            <div class="py-0.5">
+              <Technology id={technology} hrefOverride={`/blog?technology=${encodeURIComponent(technology).replace(/%20/g, "+")}`} boldText={false}/>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {data.tags && data.tags.length > 0 && (
+        <div class="flex flex-wrap gap-2">
+          <span class="font-bold">Tags:</span>
+          {data.tags.map((tag) => (
+            <span class="border border-border px-1.5 py-0.5">
+              <a
+                href={`/blog?tag=${encodeURIComponent(tag).replace(/%20/g, "+")}`}
+                class="hover:underline"
+              >
+                #{tag}
+              </a>
+            </span>
+          ))}
+        </div>
+      )}
+    </footer>
+  )}
+
+  <AuthorCard
+    name="Peter Grønbæk Andersen"
+    bio="yadda yadda"
+    image={authorImage}
+  />
+
+  {similarPosts.length > 0 && (
+    <section class="border-t border-border pt-8 flex flex-col gap-4">
+      <h2 class="text-lg font-bold">
+        Similar Posts
+      </h2>
+
+      <div class="flex flex-col gap-3">
+        {similarPosts.map((p) => (
+          <a
+            href={`/blog/${p.id}`}
+            class="border border-border p-3 hover:bg-bg-subtle transition hover:underline"
+          >
+            <div class="font-bold text-sm">
+              {p.data.title}
+            </div>
+            <div class="text-xs text-text-subtle">
+              {formatDate(p.data.date)}
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+</article>
