@@ -6,7 +6,7 @@ import Page from "@/layouts/Page.astro";
 import DefaultLayout from "@/layouts/DefaultLayout.astro";
 import Container from "@/components/Container.astro";
 import BlogPost from "@/layouts/sections/BlogPost.astro";
-import SimilarPosts from "@/layouts/sections/SimilarPosts.astro";
+import RelatedPosts from "@/layouts/sections/RelatedPosts.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts", ({ data }) => !data.draft);
@@ -25,7 +25,7 @@ interface Props {
 const { post, allPosts } = Astro.props;
 const { data } = post;
 
-const similarPosts = allPosts
+const relatedPosts = allPosts
   .filter((p) => p.id !== post.id)
   .map((p) => {
     const sharedCategories =
@@ -43,8 +43,8 @@ const similarPosts = allPosts
 <Page title={data.title} description={data.description ?? data.title}>
   <DefaultLayout>
     <Container>
-      <BlogPost post={post} similarPosts={similarPosts} />
-      <!--SimilarPosts posts={similarPosts} /-->
+      <BlogPost post={post} />
+      <RelatedPosts posts={relatedPosts} />
     </Container>
   </DefaultLayout>
 </Page>

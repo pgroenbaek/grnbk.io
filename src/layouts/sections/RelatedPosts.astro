@@ -1,0 +1,27 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+import Section from '@/components/Section';
+import RelatedPostItem from '@/components/RelatedPostItem.astro';
+
+interface Props {
+  posts: CollectionEntry<"posts">[];
+}
+
+const { posts } = Astro.props;
+---
+
+<Section id="relatedposts" variant="post">
+  <Section.Title id="relatedposts">Related Posts</Section.Title>
+  <div class="grid grid-cols-1 mt-4 gap-6">
+    {posts.length > 0 ? (
+      <div class="flex flex-col gap-4">
+        {posts.map(post => (
+          <RelatedPostItem post={post} />
+        ))}
+      </div>
+    ) : (
+      <p class="text-gray-500">No posts found.</p>
+    )}
+  </div>
+</Section>
