@@ -5,14 +5,14 @@ import BlogListItem from "@/components/BlogListItem";
 import BlogListFilter from "@/components/BlogListFilter";
 import Pagination from "@/components/Pagination";
 
-interface BlogProps {
+interface BlogOverviewProps {
   postMetadata: PostMetadata[]
   technologyMetadata: TechnologyMetadata[];
 }
 
 const POSTS_PER_PAGE = 10;
 
-export default function Blog({ postMetadata, technologyMetadata }: BlogProps) {
+export default function BlogOverview({ postMetadata, technologyMetadata }: BlogOverviewProps) {
 
   const [filters, setFilters] = useState(() => {
     if (typeof window === "undefined") {
