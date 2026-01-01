@@ -1,35 +1,35 @@
-import type { CollectionEntry } from "astro:content";
 import { useState, useMemo, useEffect } from "react";
 
+import type { PostMetadata, TechnologyMetadata } from "@/types/metadata";
 import BlogListItem from "@/components/BlogListItem";
 import BlogListFilter from "@/components/BlogListFilter";
 import Pagination from "@/components/Pagination";
 
 interface BlogProps {
-  posts: CollectionEntry<"posts">[];
-  technologies: CollectionEntry<"technologies">[];
+  postMetadata: PostMetadata[]
+  technologyMetadata: TechnologyMetadata[];
 }
 
-const POSTS_PER_PAGE = 3;
+const POSTS_PER_PAGE = 10;
 
-export default function Blog({ posts, technologies }: BlogProps) {
+export default function Blog({ postMetadata, technologyMetadata }: BlogProps) {
 
   const [filters, setFilters] = useState(() => {
     if (typeof window === "undefined") {
-      return { searchParam: "", categoryParams: [], tagParams: [], technologyParams: [] };
+      return { search: "", categories: [], tags: [], technologies: [] };
     }
 
     const params = new URLSearchParams(window.location.search);
-    const searchParam = (params.get("search") || "").toLowerCase();
-    const categoryParams = params.getAll("category").map(c => c.toLowerCase());
-    const tagParams = params.getAll("tag").map(t => t.toLowerCase());
-    const technologyParams = params.getAll("technology").map(t => t.toLowerCase());
+    const search = (params.get("search") || "").toLowerCase();
+    const categories = params.getAll("category").map(c => c.toLowerCase());
+    const tags = params.getAll("tag").map(t => t.toLowerCase());
+    const technologies = params.getAll("technology").map(t => t.toLowerCase());
 
     return {
-        searchParam,
-        categoryParams,
-        technologyParams,
-        tagParams,
+        search,
+        categories,
+        technologies,
+        tags,
     };
   });
 
@@ -44,13 +44,13 @@ export default function Blog({ posts, technologies }: BlogProps) {
   });
 
   const filteredPosts = useMemo(() => {
-    return posts.filter(post => {
-      const title = post.data.title.toLowerCase();
-      const description = post.data.description?.toLowerCase() ?? "";
+    return postMetadata.filter(post => {
+      const title = post.title.toLowerCase();
+      const description = post.description?.toLowerCase() ?? "";
 
-      const postCategories = post.data.categories?.map(c => c.toLowerCase()) ?? [];
-      const postTags = post.data.tags?.map(t => t.toLowerCase()) ?? [];
-      const postTechnologies = post.data.technologies?.map(t => t.toLowerCase()) ?? [];
+      const postCategories = post.categories?.map(category => category.toLowerCase()) ?? [];
+      const postTechnologies = post.technologies?.map(technology => technology.toLowerCase()) ?? [];
+      const postTags = post.tags?.map(tag => tag.toLowerCase()) ?? [];
 
       const matchesSearch = (search?: string) => {
         if (!search) {
@@ -71,25 +71,25 @@ export default function Blog({ posts, technologies }: BlogProps) {
         );
       };
 
-      if (!matchesSearch(filters.searchParam)) {
+      if (!matchesSearch(filters.search)) {
         return false;
       }
 
-      if (!matchesAny(filters.categoryParams, postCategories)) {
+      if (!matchesAny(filters.categories, postCategories)) {
         return false;
       }
 
-      if (!matchesAny(filters.technologyParams, postTechnologies)) {
+      if (!matchesAny(filters.technologies, postTechnologies)) {
         return false;
       }
 
-      if (!matchesAny(filters.tagParams, postTags)) {
+      if (!matchesAny(filters.tags, postTags)) {
         return false;
       }
 
       return true;
     });
-  }, [posts, filters]);
+  }, [postMetadata, filters]);
 
   const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
   const paginatedPosts = useMemo(() => {
@@ -102,13 +102,13 @@ export default function Blog({ posts, technologies }: BlogProps) {
   useEffect(() => {
     const params = new URLSearchParams();
 
-    if (filters.searchParam) {
-      params.set("search", filters.searchParam);
+    if (filters.search) {
+      params.set("search", filters.search);
     }
 
-    filters.categoryParams.forEach(category => params.append("category", category));
-    filters.technologyParams.forEach(technology => params.append("technology", technology));
-    filters.tagParams.forEach(tag => params.append("tag", tag));
+    filters.categories.forEach(category => params.append("category", category));
+    filters.technologies.forEach(technology => params.append("technology", technology));
+    filters.tags.forEach(tag => params.append("tag", tag));
 
     if (currentPage > 1) {
       params.set("page", currentPage.toString());
@@ -128,7 +128,7 @@ export default function Blog({ posts, technologies }: BlogProps) {
         {paginatedPosts.length > 0 ? (
           <div className="flex flex-col gap-4">
             {paginatedPosts.map(post => (
-              <BlogListItem key={post.id} post={post} />
+              <BlogListItem key={post.id} postMetadata={post} />
             ))}
           </div>
         ) : (
@@ -142,7 +142,12 @@ export default function Blog({ posts, technologies }: BlogProps) {
         />
       </div>
 
-      <BlogListFilter posts={posts} technologies={technologies} filters={filters} onChange={setFilters} />
+      <BlogListFilter
+        postMetadata={postMetadata}
+        technologyMetadata={technologyMetadata}
+        filters={filters}
+        onChange={setFilters}
+      />
     </div>
   );
 }

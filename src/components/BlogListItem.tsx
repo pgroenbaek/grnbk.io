@@ -1,25 +1,23 @@
-import type { CollectionEntry } from "astro:content";
+import type { PostMetadata } from "@/types/metadata";
 import { formatDate } from "@/utils/formatting";
 
 import ArrowRightIcon from "@/assets/icons/arrow-right.svg?react";
 
 interface BlogListItemProps {
-  post: CollectionEntry<"posts">;
+  postMetadata: PostMetadata;
 }
 
-export default function BlogListItem({ post }: BlogListItemProps) {
-  const { data } = post;
-
+export default function BlogListItem({ postMetadata }: BlogListItemProps) {
   return (
     <article className="blog-post rounded-none bg-bg-subtle border border-border p-2 flex gap-4 group">
-      {data.image && (
+      {postMetadata.imageSrc && (
         <a
-          href={`/blog/${post.id}`}
+          href={`/blog/${postMetadata.id}`}
           className="shrink-0 w-48 aspect-[3/2] border border-border overflow-hidden"
         >
           <img
-            src={data.image.src}
-            alt={data.image.alt || "Image"}
+            src={postMetadata.imageSrc}
+            alt={postMetadata.imageAlt || "Image"}
             width={400}
             height={267}
             className="object-cover w-full h-full group-hover:scale-[1.025] transition-transform duration-500"
@@ -29,16 +27,16 @@ export default function BlogListItem({ post }: BlogListItemProps) {
 
       <div className="flex flex-col gap-2 flex-1">
         <header className="flex flex-col gap-1">
-          <a href={`/blog/${post.id}`} className="text-lg font-bold hover:underline">
-            {data.title}
+          <a href={`/blog/${postMetadata.id}`} className="text-lg font-bold hover:underline">
+            {postMetadata.title}
           </a>
 
           <div className="flex items-center gap-3 text-xs text-text-subtle">
-            <time>{formatDate(data.date)}</time>
+            <time>{formatDate(postMetadata.date)}</time>
 
-            {data.categories && (
+            {postMetadata.categories && (
               <div className="flex gap-2">
-                {data.categories.map((category) => (
+                {postMetadata.categories.map((category) => (
                   <span key={category} className="border border-border px-1.5 py-0.5">
                     <a
                       href={`/blog?category=${encodeURIComponent(category).replace(/%20/g, "+")}`}
@@ -53,10 +51,10 @@ export default function BlogListItem({ post }: BlogListItemProps) {
           </div>
         </header>
 
-        <p className="text-sm text-text-subtle">{data.description}</p>
+        <p className="text-sm text-text-subtle">{postMetadata.description}</p>
 
         <a
-          href={`/blog/${post.id}`}
+          href={`/blog/${postMetadata.id}`}
           className="inline-flex items-center gap-1 text-sm text-accent-subtle underline"
         >
           Read more

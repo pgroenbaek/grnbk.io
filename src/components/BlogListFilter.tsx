@@ -1,5 +1,4 @@
-import type { CollectionEntry } from "astro:content";
-
+import type { PostMetadata, TechnologyMetadata } from "@/types/metadata";
 import { formatDate } from "@/utils/formatting";
 import { sortByFrequency } from "@/utils/sorting";
 import { reactTechnologyIcons } from "@/utils/icons";
@@ -8,20 +7,20 @@ import SearchIcon from "@/assets/icons/search.svg?react";
 
 interface BlogListFilterProps {
   filters: {
-    searchParam: string;
-    categoryParams: string[];
-    technologyParams: string[];
-    tagParams: string[];
+    search: string;
+    categories: string[];
+    technologies: string[];
+    tags: string[];
   };
   onChange: (filters: BlogListFilterProps["filters"]) => void;
-  posts: CollectionEntry<"posts">[];
-  technologies: CollectionEntry<"technologies">[];
+  postMetadata: PostMetadata[];
+  technologyMetadata: TechnologyMetadata[];
 }
 
-export default function BlogListFilter({ filters, onChange, posts, technologies }: BlogListFilterProps) {
-  const categoriesUsed = Array.from(new Set(sortByFrequency(posts.flatMap(post => post.data.categories ?? []))));
-  const technologiesUsed = Array.from(new Set(sortByFrequency(posts.flatMap(post => post.data.technologies ?? []))));
-  const tagsUsed = Array.from(new Set(sortByFrequency(posts.flatMap(post => post.data.tags ?? []))));
+export default function BlogListFilter({ filters, onChange, postMetadata, technologyMetadata }: BlogListFilterProps) {
+  const categoriesUsed = Array.from(new Set(sortByFrequency(postMetadata.flatMap(post => post.categories ?? []))));
+  const technologiesUsed = Array.from(new Set(sortByFrequency(postMetadata.flatMap(post => post.technologies ?? []))));
+  const tagsUsed = Array.from(new Set(sortByFrequency(postMetadata.flatMap(post => post.tags ?? []))));
 
   const toggleFilter = (type: keyof typeof filters, value: string) => {
     const current = filters[type];
@@ -39,8 +38,8 @@ export default function BlogListFilter({ filters, onChange, posts, technologies 
           </span>
           <input
             type="search"
-            value={filters.searchParam}
-            onChange={e => onChange({ ...filters, searchParam: e.target.value })}
+            value={filters.search}
+            onChange={e => onChange({ ...filters, search: e.target.value })}
             placeholder="Search posts..."
             className="w-full border border-border bg-bg pl-8 pr-2 py-1 text-sm outline-none"
           />
@@ -54,8 +53,8 @@ export default function BlogListFilter({ filters, onChange, posts, technologies 
             <button
               key={category}
               type="button"
-              onClick={() => toggleFilter("categoryParams", category)}
-              className={`border border-border px-1.5 py-0.5 filter-btn ${filters.categoryParams.includes(category) ? "is-active" : ""}`}
+              onClick={() => toggleFilter("categories", category)}
+              className={`border border-border px-1.5 py-0.5 filter-btn ${filters.categories.includes(category) ? "is-active" : ""}`}
             >
               {category}
             </button>
@@ -67,22 +66,22 @@ export default function BlogListFilter({ filters, onChange, posts, technologies 
         <label className="text-sm font-bold mb-2">Technologies</label>
         <div className="flex flex-wrap gap-2 text-xs">
           {technologiesUsed.map((technology) => {
-            const technologyEntry = technologies.find(entry => entry.id === technology);
-            const TechnologyIcon = technologyEntry && reactTechnologyIcons[technologyEntry.data.icon];
+            const technologyEntry = technologyMetadata.find(entry => entry.id === technology);
+            const TechnologyIcon = technologyEntry && reactTechnologyIcons[technologyEntry.icon];
 
             return (
               <button
                 key={technology}
                 type="button"
-                onClick={() => toggleFilter("technologyParams", technology)}
-                className={`border border-border px-1.5 py-0.5 filter-btn ${filters.technologyParams.includes(technology) ? "is-active" : ""}`}
+                onClick={() => toggleFilter("technologies", technology)}
+                className={`border border-border px-1.5 py-0.5 filter-btn ${filters.technologies.includes(technology) ? "is-active" : ""}`}
               >
                 {technologyEntry && (
                   <span className="inline-flex items-center gap-1">
                     {TechnologyIcon && (
                       <TechnologyIcon className="size-3" />
                     )}
-                    <span>{technologyEntry.data.name}</span>
+                    <span>{technologyEntry.name}</span>
                   </span>
                 )}
               </button>
@@ -98,8 +97,8 @@ export default function BlogListFilter({ filters, onChange, posts, technologies 
             <button
               key={tag}
               type="button"
-              onClick={() => toggleFilter("tagParams", tag)}
-              className={`border border-border px-1.5 py-0.5 filter-btn ${filters.tagParams.includes(tag) ? "is-active" : ""}`}
+              onClick={() => toggleFilter("tags", tag)}
+              className={`border border-border px-1.5 py-0.5 filter-btn ${filters.tags.includes(tag) ? "is-active" : ""}`}
             >
               #{tag}
             </button>
@@ -110,13 +109,13 @@ export default function BlogListFilter({ filters, onChange, posts, technologies 
       <div>
         <label className="text-sm font-bold mb-2">Recent Posts</label>
         <ul className="flex flex-col gap-2">
-          {posts.slice(0, 5).map(post => (
+          {postMetadata.slice(0, 5).map(post => (
             <li key={post.id}>
               <a href={`/blog/${post.id}`} className="text-sm hover:underline">
-                {post.data.title}
+                {post.title}
               </a>
               <div className="text-xs text-text-subtle">
-                {formatDate(post.data.date)}
+                {formatDate(post.date)}
               </div>
             </li>
           ))}
