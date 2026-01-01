@@ -7,7 +7,9 @@ import DefaultLayout from "@/layouts/DefaultLayout.astro";
 import Page from "@/layouts/Page.astro";
 
 const technologies = await getCollection("technologies");
+
 const posts = await getCollection("posts", ({ data }) => !data.draft);
+
 const allPosts = posts.sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime()
 );

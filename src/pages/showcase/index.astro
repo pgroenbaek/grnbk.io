@@ -36,7 +36,8 @@ const projectsWebsites = projects
   .filter((project) => excludeFeatured(project))
   .sort((a, b) => b.id.localeCompare(a.id));
 
-const testimonials = await getCollection("testimonials", ({ data }) => !data.draft);
+const testimonials = (await getCollection("testimonials", ({ data }) => !data.draft))
+  .sort((a, b) => b.id.localeCompare(a.id));
 ---
 
 <Page title="Index" description="Index">

@@ -1,0 +1,40 @@
+---
+import { formatDate } from '@/utils/formatting';
+import Section from '@/components/Section';
+import type { CollectionEntry } from 'astro:content';
+import BlogListItem from '../../components/BlogListItem';
+
+interface Props {
+  posts: CollectionEntry<"posts">[];
+}
+
+const { posts } = Astro.props;
+---
+
+<Section id="similarposts" variant="post">
+  <Section.Title id="similarposts">Similar Posts</Section.Title>
+  <div class="grid grid-cols-1 mt-4 gap-6">
+    {/*posts.map((p) => (
+      <a
+        href={`/blog/${p.id}`}
+        class="border border-border p-3 hover:bg-bg-subtle transition hover:underline"
+      >
+        <div class="font-bold text-sm">
+          {p.data.title}
+        </div>
+        <div class="text-xs text-text-subtle">
+          {formatDate(p.data.date)}
+        </div>
+      </a>
+    ))*/}
+    {posts.length > 0 ? (
+      <div class="flex flex-col gap-4">
+        {posts.map(post => (
+          <BlogListItem post={post} />
+        ))}
+      </div>
+    ) : (
+      <p class="text-gray-500">No posts found.</p>
+    )}
+  </div>
+</Section>

@@ -6,6 +6,7 @@ import Page from "@/layouts/Page.astro";
 import DefaultLayout from "@/layouts/DefaultLayout.astro";
 import Container from "@/components/Container.astro";
 import BlogPost from "@/layouts/sections/BlogPost.astro";
+import SimilarPosts from "@/layouts/sections/SimilarPosts.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts", ({ data }) => !data.draft);
@@ -42,7 +43,8 @@ const similarPosts = allPosts
 <Page title={data.title} description={data.description ?? data.title}>
   <DefaultLayout>
     <Container>
-      <BlogPost post={post} similarPosts={similarPosts}>
+      <BlogPost post={post} similarPosts={similarPosts} />
+      <SimilarPosts posts={similarPosts} />
     </Container>
   </DefaultLayout>
 </Page>
