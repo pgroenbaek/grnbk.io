@@ -4,14 +4,14 @@ import { useState, useMemo, useEffect } from "react";
 import BlogListItem from "@/components/BlogListItem";
 import BlogListFilter from "@/components/BlogListFilter";
 
-interface BlogOverviewProps {
+interface BlogProps {
   posts: CollectionEntry<"posts">[];
   technologies: CollectionEntry<"technologies">[];
 }
 
 const POSTS_PER_PAGE = 3;
 
-export default function BlogOverview({ posts, technologies }: BlogOverviewProps) {
+export default function Blog({ posts, technologies }: BlogProps) {
 
   const [filters, setFilters] = useState(() => {
     if (typeof window === "undefined") {
