@@ -6,19 +6,19 @@ import { reactTechnologyIcons } from "@/utils/icons";
 
 import SearchIcon from "@/assets/icons/search.svg?react";
 
-interface FilterSidebarProps {
+interface BlogListFilterProps {
   filters: {
     searchParam: string;
     categoryParams: string[];
     technologyParams: string[];
     tagParams: string[];
   };
-  onChange: (filters: FilterSidebarProps["filters"]) => void;
+  onChange: (filters: BlogListFilterProps["filters"]) => void;
   posts: CollectionEntry<"posts">[];
   technologies: CollectionEntry<"technologies">[];
 }
 
-export default function FilterSidebar({ filters, onChange, posts, technologies }: FilterSidebarProps) {
+export default function BlogListFilter({ filters, onChange, posts, technologies }: BlogListFilterProps) {
   const categoriesUsed = Array.from(new Set(sortByFrequency(posts.flatMap(post => post.data.categories ?? []))));
   const technologiesUsed = Array.from(new Set(sortByFrequency(posts.flatMap(post => post.data.technologies ?? []))));
   const tagsUsed = Array.from(new Set(sortByFrequency(posts.flatMap(post => post.data.tags ?? []))));

@@ -1,8 +1,8 @@
 import type { CollectionEntry } from "astro:content";
 import { useState, useMemo, useEffect } from "react";
 
-import BlogList from "@/components/BlogList";
-import FilterSidebar from "@/components/FilterSidebar";
+import BlogListItem from "@/components/BlogListItem";
+import BlogListFilter from "@/components/BlogListFilter";
 
 interface BlogOverviewProps {
   posts: CollectionEntry<"posts">[];
@@ -124,7 +124,15 @@ export default function BlogOverview({ posts, technologies }: BlogOverviewProps)
   return (
     <div className="grid lg:grid-cols-[1fr_300px] gap-8">
       <div>
-        <BlogList posts={paginatedPosts} />
+        {paginatedPosts.length > 0 ? (
+          <div className="flex flex-col gap-4">
+            {paginatedPosts.map(post => (
+              <BlogListItem key={post.id} post={post} />
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-500">No posts found.</p>
+        )}
 
         {totalPages > 1 && (
           <div className="flex justify-center items-center gap-4 mt-4">
@@ -147,7 +155,7 @@ export default function BlogOverview({ posts, technologies }: BlogOverviewProps)
         )}
       </div>
 
-      <FilterSidebar posts={posts} technologies={technologies} filters={filters} onChange={setFilters} />
+      <BlogListFilter posts={posts} technologies={technologies} filters={filters} onChange={setFilters} />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 
-import BlogOverview from "@/components/BlogOverview";
+import Blog from "@/layouts/sections/Blog";
 import Container from "@/components/Container.astro";
 import DefaultLayout from "@/layouts/DefaultLayout.astro";
 import Page from "@/layouts/Page.astro";
@@ -18,7 +18,7 @@ const allPosts = posts.sort(
     <Container>
       <div class="flex flex-col gap-6">
         <h1 class="text-3xl font-bold">Blog</h1>
-        <BlogOverview posts={allPosts} technologies={technologies} client:only="react" />
+        <Blog posts={allPosts} technologies={technologies} client:only="react" />
       </div>
     </Container>
   </DefaultLayout>
