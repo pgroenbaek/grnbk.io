@@ -1,20 +1,12 @@
-.blog-post {
-  display: none;
-}
-
-.blog-post.is-visible {
-  display: flex;
-}
-
-.filter-btn.is-active {
+.filter-button.is-active {
   background-color: var(--color-border);
 }
 
-.filter-btn {
+.filter-button {
   transition: background-color 0.2s ease;
 }
 
-.filter-btn:hover, .filter-btn:hover span, .filter-btn:hover span span {
+.filter-button:hover, .filter-button:hover span, .filter-button:hover span span {
   text-decoration: underline;
 }
 

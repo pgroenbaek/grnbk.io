@@ -54,7 +54,7 @@ export default function BlogListFilter({ filters, onChange, postMetadata, techno
               key={category}
               type="button"
               onClick={() => toggleFilter("categories", category)}
-              className={`border border-border px-1.5 py-0.5 filter-btn ${filters.categories.includes(category) ? "is-active" : ""}`}
+              className={`border border-border px-1.5 py-0.5 filter-button ${filters.categories.includes(category) ? "is-active" : ""}`}
             >
               {category}
             </button>
@@ -74,7 +74,7 @@ export default function BlogListFilter({ filters, onChange, postMetadata, techno
                 key={technology}
                 type="button"
                 onClick={() => toggleFilter("technologies", technology)}
-                className={`border border-border px-1.5 py-0.5 filter-btn ${filters.technologies.includes(technology) ? "is-active" : ""}`}
+                className={`border border-border px-1.5 py-0.5 filter-button ${filters.technologies.includes(technology) ? "is-active" : ""}`}
               >
                 {technologyEntry && (
                   <span className="inline-flex items-center gap-1">
@@ -98,7 +98,7 @@ export default function BlogListFilter({ filters, onChange, postMetadata, techno
               key={tag}
               type="button"
               onClick={() => toggleFilter("tags", tag)}
-              className={`border border-border px-1.5 py-0.5 filter-btn ${filters.tags.includes(tag) ? "is-active" : ""}`}
+              className={`border border-border px-1.5 py-0.5 filter-button ${filters.tags.includes(tag) ? "is-active" : ""}`}
             >
               #{tag}
             </button>
