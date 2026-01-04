@@ -47,7 +47,7 @@ const standardTimeMatch = "Central European Standard Time";
       standardTimeMatch
     };
 
-    const getCETLabel = (date) => {
+    const getTimezoneLabel = (date) => {
       const parts = new Intl.DateTimeFormat("en-US", {
         timeZone: config.timezone,
         timeZoneName: "long"
@@ -68,7 +68,7 @@ const standardTimeMatch = "Central European Standard Time";
       }).format(today);
 
       document.getElementById("dot-time").innerText = time;
-      document.getElementById("dot-timezone").innerText = getCETLabel(today);
+      document.getElementById("dot-timezone").innerText = getTimezoneLabel(today);
     };
 
     updateTime();

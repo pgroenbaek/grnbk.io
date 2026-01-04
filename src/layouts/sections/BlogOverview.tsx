@@ -35,7 +35,7 @@ export default function BlogOverview({ postMetadata, technologyMetadata }: BlogO
 
   const [filters, setFilters] = useState(() => {
     if (typeof window === "undefined") {
-      return { search: "", categories: [], tags: [], technologies: [] };
+      return { search: "", categories: [], technologies: [], tags: [] };
     }
 
     const params = new URLSearchParams(window.location.search);
