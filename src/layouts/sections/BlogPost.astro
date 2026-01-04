@@ -64,21 +64,29 @@ const { Content } = await render(post);
         image={authorImage}
       />
 
-      <div class="flex flex-wrap items-center gap-3 text-xs text-text-subtle">
-        <time>{formatDate(data.date)}</time>
+      <div class="flex flex-col gap-2">
+        <div class="flex flex-wrap items-center gap-4 text-xs text-text-subtle">
+          <time>{formatDate(data.date)}</time>
 
-        {data.categories && (
-          <div class="flex gap-2">
-            {data.categories.map((category) => (
-              <span class="border border-border px-1.5 py-0.5">
-                <a
-                  href={`/blog?category=${encodeURIComponent(category).replace(/%20/g, "+")}`}
-                  class="hover:underline"
-                >
-                  {category}
-                </a>
-              </span>
-            ))}
+          {data.categories && (
+            <div class="flex gap-2">
+              {data.categories.map((category) => (
+                <span class="border border-border px-1.5 py-0.5">
+                  <a
+                    href={`/blog?category=${encodeURIComponent(category).replace(/%20/g, "+")}`}
+                    class="hover:underline"
+                  >
+                    {category}
+                  </a>
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {data.updated && (
+          <div class="flex flex-wrap items-center gap-1 text-xs text-text-subtle mt-1">
+            <i>Last updated: <time>{formatDate(data.updated)}</time></i>
           </div>
         )}
       </div>
