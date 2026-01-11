@@ -38,11 +38,9 @@ const socials = [
 ---
 
 <div class="flex space-x-2">
-  {
-    socials.map((socialItem) => (
-      <SocialLink href={socialItem.href} label={socialItem.name}>
-        <socialItem.icon class="w-5 h-5" />
-      </SocialLink>
-    ))
-  }
+  {socials.map((socialItem) => (
+    <SocialLink href={socialItem.href} label={socialItem.name}>
+      <socialItem.icon class="w-5 h-5" />
+    </SocialLink>
+  ))}
 </div>

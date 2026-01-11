@@ -54,19 +54,17 @@ const rightMenu: MenuItem[] = [
 
       <!-- Left Menu -->
       <nav class="flex flex-1 space-x-3 justify-end">
-        {
-          leftMenu.map((menuItem) => (
-            <Button
-              href={menuItem.href}
-              label={menuItem.label}
-              variant={menuItem.primary ? "primary" : undefined}
-              class="px-3 py-1.5 max-sm:!p-2 max-sm:[&>svg:first-child]:!size-6 max-sm:[&>svg:first-child]:!mr-0 whitespace-nowrap"
-            >
-              <menuItem.icon class="w-6 h-6" />
-              <span class="hidden sm:inline">{menuItem.label}</span>
-            </Button>
-          ))
-        }
+        {leftMenu.map((menuItem) => (
+          <Button
+            href={menuItem.href}
+            label={menuItem.label}
+            variant={menuItem.primary ? "primary" : undefined}
+            class="px-3 py-1.5 max-sm:!p-2 max-sm:[&>svg:first-child]:!size-6 max-sm:[&>svg:first-child]:!mr-0 whitespace-nowrap"
+          >
+            <menuItem.icon class="w-6 h-6" />
+            <span class="hidden sm:inline">{menuItem.label}</span>
+          </Button>
+        ))}
       </nav>
 
       <!-- Logo -->
@@ -77,19 +75,17 @@ const rightMenu: MenuItem[] = [
 
       <!-- Right Menu -->
       <nav class="flex flex-1 space-x-3 justify-start">
-        {
-          rightMenu.map((menuItem) => (
-            <Button
-              href={menuItem.href}
-              label={menuItem.label}
-              variant={menuItem.primary ? "primary" : undefined}
-              class="px-3 py-1.5 max-sm:!p-2 max-sm:[&>svg:first-child]:!size-6 max-sm:[&>svg:first-child]:!mr-0 whitespace-nowrap"
-            >
-              <menuItem.icon class="w-6 h-6" />
-              <span class="hidden sm:inline">{menuItem.label}</span>
-            </Button>
-          ))
-        }
+        {rightMenu.map((menuItem) => (
+          <Button
+            href={menuItem.href}
+            label={menuItem.label}
+            variant={menuItem.primary ? "primary" : undefined}
+            class="px-3 py-1.5 max-sm:!p-2 max-sm:[&>svg:first-child]:!size-6 max-sm:[&>svg:first-child]:!mr-0 whitespace-nowrap"
+          >
+            <menuItem.icon class="w-6 h-6" />
+            <span class="hidden sm:inline">{menuItem.label}</span>
+          </Button>
+        ))}
       </nav>
 
     </div>

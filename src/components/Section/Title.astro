@@ -38,12 +38,10 @@ const href = id ? `/#${id}` : undefined;
     <span>
       <slot />
     </span>
-    {
-      id && (
-        <span class="group-hover:opacity-100 opacity-0 transition-opacity">
-          <LinkIcon class="w-5 h-5" />
-        </span>
-      )
-    }
+    {id && (
+      <span class="group-hover:opacity-100 opacity-0 transition-opacity">
+        <LinkIcon class="w-5 h-5" />
+      </span>
+    )}
   </InnerTag>
 </HeadingTag>

@@ -38,37 +38,35 @@ const { Content } = await render(project);
 
 <div class="rounded-none bg-bg-subtle border border-border p-2 flex flex-col group">
   <div class="relative rounded-none border border-border aspect-[2/1] overflow-hidden">
-    {
-      data.url && showLinks ? (
-        <a
-          href={data.url}
-          class="text-accent-subtle underline font-bold text-lg flex items-center"
-          target="_blank"
-        >
-          <img
-            src={data.image.src}
-            alt={data.image.alt}
-            width={800}
-            height={400}
-            {loading}
-            decoding={loading === "eager" ? "sync" : "async"}
-            fetchpriority={loading === "eager" ? "high" : undefined}
-            class="object-cover object-center size-full group-hover:scale-[1.025] transition-transform will-change-transform duration-500 ease-out"
-          />
-        </a>
-      ) : (
+    {data.url && showLinks ? (
+      <a
+        href={data.url}
+        class="text-accent-subtle underline font-bold text-lg flex items-center"
+        target="_blank"
+      >
         <img
-            src={data.image.src}
-            alt={data.image.alt}
-            width={800}
-            height={400}
-            {loading}
-            decoding={loading === "eager" ? "sync" : "async"}
-            fetchpriority={loading === "eager" ? "high" : undefined}
-            class="object-cover object-center size-full group-hover:scale-[1.025] transition-transform will-change-transform duration-500 ease-out"
-          />
-      )
-    }
+          src={data.image.src}
+          alt={data.image.alt}
+          width={800}
+          height={400}
+          {loading}
+          decoding={loading === "eager" ? "sync" : "async"}
+          fetchpriority={loading === "eager" ? "high" : undefined}
+          class="object-cover object-center size-full group-hover:scale-[1.025] transition-transform will-change-transform duration-500 ease-out"
+        />
+      </a>
+    ) : (
+      <img
+          src={data.image.src}
+          alt={data.image.alt}
+          width={800}
+          height={400}
+          {loading}
+          decoding={loading === "eager" ? "sync" : "async"}
+          fetchpriority={loading === "eager" ? "high" : undefined}
+          class="object-cover object-center size-full group-hover:scale-[1.025] transition-transform will-change-transform duration-500 ease-out"
+        />
+    )}
   </div>
   <div class="px-1 pt-2 flex flex-col gap-4 flex-1">
     <div class="flex gap-2">

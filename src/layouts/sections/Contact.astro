@@ -30,19 +30,16 @@ const hourlyRate = null;
   <div class="flex items-center justify-between">
     <Section.Title {id}>{title}</Section.Title>
     <p class="text-text font-semibold text-lg">
-      {
-        hourlyRate != null && (
-          <>
-            {
-              new Intl.NumberFormat("en-US", {
-                style: "currency",
-                currency: "EUR",
-                maximumSignificantDigits: 2,
-              }).format(hourlyRate)
-            }/hour
-          </>
-        )
-      }
+      {hourlyRate != null && (
+        <>
+          {new Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "EUR",
+              maximumSignificantDigits: 2,
+            }).format(hourlyRate)
+          }/hour
+        </>
+      )}
     </p>
   </div>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">

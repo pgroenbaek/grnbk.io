@@ -55,20 +55,18 @@ const { Content } = await render(testimonial);
       />
       <div class="leading-5">
         <div class="mb-1">
-          {
-            data.href && showLinks ? (
-              <a
-                href={data.href}
-                class="text-accent-subtle underline font-bold text-md flex items-center"
-                target="_blank"
-              >
-                {data.title}
-                <LinkExternalIcon class="size-3 ml-1" />
-              </a>
-            ) : (
-              <div class="text-text font-bold text-md">{data.title}</div>
-            )
-          }
+          {data.href && showLinks ? (
+            <a
+              href={data.href}
+              class="text-accent-subtle underline font-bold text-md flex items-center"
+              target="_blank"
+            >
+              {data.title}
+              <LinkExternalIcon class="size-3 ml-1" />
+            </a>
+          ) : (
+            <div class="text-text font-bold text-md">{data.title}</div>
+          )}
         </div>
         <p class="text-sm">{data.subtitle}</p>
       </div>
