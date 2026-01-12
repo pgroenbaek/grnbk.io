@@ -71,13 +71,13 @@ const testimonials = (await getCollection("testimonials", ({ data }) => !data.dr
         <Testimonials id="testimonials" title="Testimonials" testimonials={testimonials} showLinks={false} />
       )}
       {projectsOss.length > 0 && (
-        <Projects id="oss-projects" title="Open Source Projects" projects={projectsOss} showLinks={false} />
+        <Projects id="open-source-projects" title="Open Source Projects" projects={projectsOss} showLinks={false} />
       )}
       {projectsWebsites.length > 0 && (
         <Projects id="websites" title="Websites I Run" projects={projectsWebsites} showLinks={false} />
       )}
       {projectsOssContrib.length > 0 && (
-        <Projects id="oss-contributions" title="Open Source Contributions" projects={projectsOssContrib} showLinks={false} />
+        <Projects id="open-source-contributions" title="Open Source Contributions" projects={projectsOssContrib} showLinks={false} />
       )}
     </Container>
   </ShowcaseLayout>
