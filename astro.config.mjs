@@ -7,9 +7,11 @@ import tailwind from '@astrojs/tailwind';
 import svgr from 'vite-plugin-svgr';
 import path from "path";
 
+const domain = process.env.DOMAIN;
+
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://grnbk.io',
+  site: `https://${domain}`,
   integrations: [
     mdx(),
     tailwind(),

@@ -1,0 +1,56 @@
+==================================================================
+https://keybase.io/pgroenbaek
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://grnbk.io
+  * I am pgroenbaek (https://keybase.io/pgroenbaek) on keybase.
+  * I have a public key ASC8gEFTebdhkHmxrfhulSIBwqurFlJHzTfH1zr3W-eo1go
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "0120fc43f9d9507c98b8ec98f356faad2e41e4d387bf8d9d77a1c1a200587199ce080a",
+      "host": "keybase.io",
+      "kid": "0120bc80415379b7619079b1adf86e952201c2abab165247cd37c7d73af75be7a8d60a",
+      "uid": "e7020a970eada471601045d0df3ac719",
+      "username": "pgroenbaek"
+    },
+    "merkle_root": {
+      "ctime": 1769889349,
+      "hash": "3288ae5616d62eb29aeeddfd1dcd4056f84a9d1c29125294c4cce29714f7bf8854e5d143c1316e43e3004e5326d744b7ac91581424773d9825ba9d0b59a31924",
+      "hash_meta": "6fe7e52d80ecb497e56bac2e0f2a4fa2c78676ed31843904e5179410b9894247",
+      "seqno": 27379962
+    },
+    "service": {
+      "entropy": "mkpzYo389SnrEcn23uSSGt/S",
+      "hostname": "grnbk.io",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "6.5.1"
+  },
+  "ctime": 1769889512,
+  "expire_in": 504576000,
+  "prev": "eade33bf5d1fded75daf80fea173d89b29d19f8f1ee4d0a0ea32b1fdceeae0da",
+  "seqno": 29,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgvIBBU3m3YZB5sa34bpUiAcKrqxZSR803x9c691vnqNYKp3BheWxvYWTESpcCHcQg6t4zv10f3tddr4D+oXPYmynRn48e5NCg6jKx/c7q4NrEIL+lmWjcfW2kqepQlLf3t3D6GoN0EXSsCFa2Jew4qLafAgHCo3NpZ8RAhczMgYCw0liLCVXGkqWifA7dDfIPgXPQgHBfO/vZO1X0x9MxbLok3HBTzhyZxlkMEhV5m4O0B9jKlBVTd4acCqhzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIOVlH+4TOp6+1xfLeVNTYmMEdH74E0mXV3s650uJJvhFo3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/pgroenbaek
+
+==================================================================
