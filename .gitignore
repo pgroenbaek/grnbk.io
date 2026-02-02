@@ -1,6 +1,7 @@
 # identity
 /public/.well-known/openpgpkey/
 /public/.well-known/keybase.txt
+/public/pgp.asc
 
 # build output
 dist/
