@@ -3,10 +3,10 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development astro dev",
-    "prebuild": "cross-env NODE_ENV=production node scripts/enable-wkd.js && cross-env NODE_ENV=production node scripts/enable-keybase-proof.js && cross-env NODE_ENV=production node scripts/enable-pgp-public-key.js",
-    "build": "cross-env NODE_ENV=production astro build",
-    "preview": "cross-env NODE_ENV=production astro preview",
+    "dev": "astro dev",
+    "prebuild": "node scripts/prebuild.js",
+    "build": "astro build",
+    "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
