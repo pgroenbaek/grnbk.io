@@ -10,20 +10,6 @@ export default {
   darkMode: "class",
   theme: {
     extend: {
-      colors: {
-        accent: 'var(--color-accent)',
-        'accent-subtle': 'var(--color-accent-subtle)',
-        'primary-bg': 'var(--color-primary-bg)',
-        'primary-text': 'var(--color-primary-text)',
-        bg: 'var(--color-bg)',
-        surface: 'var(--color-surface)',
-        border: 'var(--color-border)',
-        text: 'var(--color-text)',
-        muted: 'var(--color-muted)',
-      },
-      fontFamily: {
-        sans: ['Rubik', 'sans-serif'],
-      },
       aspectRatio: {
         "4/3": "4 / 3",
         "3/2": "3 / 2",

@@ -18,7 +18,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import '@/styles/global.css';
+import { Font } from "astro:assets";
 import { SEO } from 'astro-seo';
 
 const { title, description, ogImage } = Astro.props;
@@ -49,6 +49,9 @@ const { title, description, ogImage } = Astro.props;
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     <meta name="generator" content={Astro.generator} />
+
+    <Font cssVariable="--font-rubik" />
+    <link href="/src/styles/global.css" rel="stylesheet">
     
     <SEO
       title={title}

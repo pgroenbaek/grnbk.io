@@ -1,9 +1,9 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, fontProviders } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
-import tailwind from '@astrojs/tailwind';
+import tailwindcss from '@tailwindcss/vite';
 import svgr from 'vite-plugin-svgr';
 import path from "path";
 
@@ -14,13 +14,19 @@ export default defineConfig({
   site: `https://${domain}`,
   integrations: [
     mdx(),
-    tailwind(),
     sitemap(),
     react()
   ],
+  fonts: [{
+    provider: fontProviders.fontsource(),
+    name: "Rubik",
+    weights: [400, 500, 700],
+    cssVariable: "--font-rubik",
+  }],
   vite: {
     plugins: [
-      svgr()
+      svgr(),
+      tailwindcss()
     ],
     resolve: {
       alias: {

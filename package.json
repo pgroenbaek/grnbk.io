@@ -1,7 +1,7 @@
 {
   "name": "grnbkio",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "scripts": {
     "dev": "astro dev",
     "prebuild": "node scripts/prebuild.js",
@@ -10,14 +10,14 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.3.13",
-    "@astrojs/react": "^4.4.2",
-    "@astrojs/rss": "^4.0.14",
-    "@astrojs/sitemap": "^3.6.0",
+    "@astrojs/mdx": "^5.0.3",
+    "@astrojs/react": "^5.0.3",
+    "@astrojs/rss": "^4.0.18",
+    "@astrojs/sitemap": "^3.7.2",
     "@mdx-js/loader": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
-    "@tailwindcss/typography": "^0.5.19",
-    "astro": "^5.16.6",
+    "@tailwindcss/vite": "^4.2.2",
+    "astro": "^6.1.4",
     "astro-color-scheme": "^1.1.5",
     "astro-seo": "^0.8.4",
     "react": "^19.2.0",
@@ -25,10 +25,13 @@
     "xdm": "^3.4.0"
   },
   "devDependencies": {
-    "@astrojs/tailwind": "^6.0.2",
-    "baseline-browser-mapping": "^2.9.11",
+    "@tailwindcss/postcss": "^4.2.2",
+    "@tailwindcss/typography": "^0.5.19",
+    "autoprefixer": "^10.4.27",
     "cross-env": "^10.1.0",
     "dotenv": "^16.6.1",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^4.2.2",
     "vite-plugin-svgr": "^4.5.0"
   }
 }

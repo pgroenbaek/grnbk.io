@@ -17,6 +17,54 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+@theme inline {
+  /* Fonts */
+  --font-sans: var(--font-rubik);
+
+  /* Colors */
+  --color-accent: var(--color-accent);
+  --color-accent-subtle: var(--color-accent-subtle);
+  --color-primary-bg: var(--color-primary-bg);
+  --color-primary-text: var(--color-primary-text);
+  --color-bg: var(--color-bg);
+  --color-surface: var(--color-surface);
+  --color-border: var(--color-border);
+  --color-text: var(--color-text);
+  --color-muted: var(--color-muted);
+}
+
+/* Light mode */
+:root {
+  --color-accent: #00c150;
+  --color-accent-subtle: #00c150;
+  --color-primary-bg: #00c150;
+  --color-primary-text: #f5f5f5;
+  --color-bg: #ffffff;
+  --color-surface: #ffffff;
+  --color-border: #e0e0e0;
+  --color-text: #1f1f1f;
+  --color-muted: #6b6b6b;
+}
+
+/* Dark mode overrides */
+.dark {
+  --color-accent: #60fa94;
+  --color-accent-subtle: #54dd82;
+  --color-primary-bg: #008c45;
+  --color-primary-text: #f0f0f0;
+  --color-bg: #161616;
+  --color-surface: #1e1e1e;
+  --color-border: #2c2c2c;
+  --color-text: #f5f5f5;
+  --color-muted: #a0a0a0;
+}
+
+/* Smooth theme transitions */
+html {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Filter buttons */
 .filter-button.is-active {
   background-color: var(--color-border);
 }
@@ -28,14 +76,3 @@
 .filter-button:hover, .filter-button:hover span, .filter-button:hover span span {
   text-decoration: underline;
 }
-
-/*a {
-  @apply font-medium underline underline-offset-2 transition-colors;
-  text-decoration-thickness: 1px;
-  color: #60FA94;
-}
-
-a:hover {
-  color: #7BFFAE;
-  text-decoration-thickness: 2px;
-}*/

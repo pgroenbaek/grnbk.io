@@ -17,14 +17,6 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-@import './colors.css';
-@import './fonts.css';
-@import './theme.css';
+@import "./theme.css";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-body {
-  @apply font-sans;
-}
+@import "tailwindcss";
