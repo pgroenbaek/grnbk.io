@@ -18,7 +18,14 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-const STATUS_API_URL = import.meta.env.PUBLIC_STATUS_API_URL;
+const statusDotApiUrl = import.meta.env.STATUSDOT_API_URL;
+const statusDotPollInterval = 5 * 60 * 1000;
+const statusDotColors = {
+  0: "red-500",
+  1: "green-500",
+  2: "yellow-500",
+  3: "red-500",
+};
 
 const timezone = "Europe/Copenhagen";
 const timezoneLabel = "CET";
@@ -27,10 +34,77 @@ const standardTimeMatch = "Central European Standard Time";
 ---
 
 <span class="bg-surface rounded-none border border-border px-1.5 tabular-nums select-none text-text inline-flex gap-1 items-center">
-  <span class="size-2 inline-block rounded-full bg-red-500"></span>
+  <span id="dot-status" class="size-2 inline-block rounded-full bg-red-500"></span>
   <span id="dot-time">00:00:00</span>
 </span>
 <span id="dot-timezone">{timezoneLabel}</span>
+
+<script
+  is:inline
+  define:vars={{
+    statusDotApiUrl,
+    statusDotPollInterval,
+    statusDotColors
+  }}
+>
+  (() => {
+    const statusDot = document.getElementById('dot-status');
+
+    function updateDot(status) {
+      const color = statusDotColors[status] ?? 'red-500';
+      statusDot.className = `size-2 inline-block rounded-full bg-${color}`;
+    }
+
+    function loadStatus() {
+      const stored = localStorage.getItem('statusDotData');
+      if (!stored) {
+        return null;
+      }
+      try {
+        const data = JSON.parse(stored);
+        const age = Date.now() - data.timestamp;
+        if (age < statusDotPollInterval) {
+          return data;
+        }
+        return null;
+      } catch {
+        return null;
+      }
+    }
+
+    function saveStatus(status) {
+      localStorage.setItem('statusDotData', JSON.stringify({
+        status,
+        timestamp: Date.now()
+      }));
+    }
+
+    async function fetchStatus() {
+      try {
+        const res = await fetch(`${statusDotApiUrl}/api/status`);
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
+        const data = await res.json();
+        if (typeof data.status === 'number') {
+          updateDot(data.status);
+          saveStatus(data.status);
+        }
+      } catch (e) {
+        console.error('Failed to fetch status:', e);
+      }
+    }
+
+    const stored = loadStatus();
+    if (stored) {
+      updateDot(stored.status);
+    } else {
+      fetchStatus();
+    }
+
+    setInterval(fetchStatus, statusDotPollInterval);
+  })();
+</script>
 
 <script
   is:inline

@@ -8,6 +8,11 @@ export default {
     "./src/**/*.{astro,html,js,jsx,ts,tsx,mdx,vue,svelte}",
   ],
   darkMode: "class",
+  safelist: [
+    "bg-red-500",
+    "bg-green-500",
+    "bg-yellow-500"
+  ],
   theme: {
     extend: {
       aspectRatio: {
