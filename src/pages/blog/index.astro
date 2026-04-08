@@ -70,7 +70,11 @@ const postMetadata: PostMetadata[] = posts.map(post => ({
           Home
         </a>
         <h1 class="text-3xl font-bold mb-3">Blog</h1>
-        <BlogOverview postMetadata={postMetadata} technologyMetadata={technologyMetadata} client:only="react" />
+        <BlogOverview
+          postMetadata={postMetadata}
+          technologyMetadata={technologyMetadata}
+          client:load
+        />
       </div>
     </Container>
   </DefaultLayout>

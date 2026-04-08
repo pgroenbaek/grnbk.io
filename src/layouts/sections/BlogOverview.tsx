@@ -25,7 +25,7 @@ import BlogListFilter from "@/components/BlogListFilter";
 import Pagination from "@/components/Pagination";
 
 interface BlogOverviewProps {
-  postMetadata: PostMetadata[]
+  postMetadata: PostMetadata[];
   technologyMetadata: TechnologyMetadata[];
 }
 
