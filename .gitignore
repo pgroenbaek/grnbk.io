@@ -31,3 +31,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# temp content
+/content
