@@ -34,3 +34,6 @@ pnpm-debug.log*
 
 # temp content
 /content
+
+# temp pages
+/pages
