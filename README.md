@@ -31,9 +31,9 @@ The `DOMAIN` variable is the domain name of the site.
 
 The `STATUSDOT_API_URL` variable is the URL of the [Statusdot API](https://github.com/pgroenbaek/statusdot-api), which is a tiny API for managing your online status and presence that can be hosted on CloudFlare Workers.
 
-The identity variables enables copying files from the [identity](/identity) folder of the repo into the built site's `.well-known` path. If false, the files will not be copied and not be present in the built site's `.well-known` path.
+The identity variables enable copying files from the [identity](/identity) folder of the repo into the built site's `.well-known` path. If false, the files will not be copied and not be present in the built site's `.well-known` path.
 
-These files are a keybase DNS proof, as well as my public PGP key and its Web Key Directory (WKD) configuration. Make sure to replace the file contents if you do decide to use it, the files in the repo are specific to me.
+These files are my keybase DNS proof, as well as my public PGP key and its Web Key Directory (WKD) configuration. Make sure to replace the file contents with your own stuff if you do decide to use this functionality, the files contained in the repo are specific to me.
 
 ## Building
 
