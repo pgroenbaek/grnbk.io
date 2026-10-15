@@ -72,7 +72,7 @@ You can deploy the project by running the following command in your terminal:
 echo '<DOMAIN_NAME>' > dist/CNAME && wrangler pages deploy dist --project-name=<CLOUDFLARE_PAGES_PROJECT_NAME>
 ```
 
-Or use the shorthand defined in `package.json` (change the command to your own project/domain name before using):
+Or use the shorthand defined in `package.json` (change the command contained therein to your own project/domain name before using this):
 
 ```bash
 npm run deploy
